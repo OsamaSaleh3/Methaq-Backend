@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Methaq.Api/Methaq.Api.csproj" />
+  <Project Path="Methaq.Application/Methaq.Application.csproj" />
+  <Project Path="Methaq.Contracts/Methaq.Contracts.csproj" />
+  <Project Path="Methaq.Domain/Methaq.Domain.csproj" />
+  <Project Path="Methaq.Infrastructure/Methaq.Infrastructure.csproj" />
+</Solution>
