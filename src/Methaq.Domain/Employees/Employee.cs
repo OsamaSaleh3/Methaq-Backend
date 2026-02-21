@@ -1,11 +1,9 @@
 ﻿using ErrorOr;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.Common;
-using Methaq.Domain.Employees;
 using Methaq.Domain.Employees.enums;
 using Methaq.Domain.Sections;
-using System;
-using System.Collections.Generic;
+
 namespace Methaq.Domain.Employees;
 
 public class Employee : BaseEntity
@@ -14,18 +12,22 @@ public class Employee : BaseEntity
     public ApplicationUser User { get; private set; } = null!;
 
     public AcademicDegree Degree { get; private set; }
-    public string? IslamicQualifications { get; private set; } 
+    public string? IslamicQualifications { get; private set; }
     public string Specialization { get; private set; } = null!;
-    public string? CurrentJob { get; private set; } 
+    public string? CurrentJob { get; private set; }
     public DateTime HireDate { get; private set; }
     public EmploymentStatus EmploymentStatus { get; private set; }
+
+    public EmployeeRole Role { get; private set; }
+
+    public Guid? ManagedCenterId { get; private set; }
 
     private readonly List<Section> _supervisedSections = [];
     public IReadOnlyCollection<Section> SupervisedSections => _supervisedSections.AsReadOnly();
 
     protected Employee() { }
 
-    private Employee(Guid userId, AcademicDegree degree, string specialization, string? islamicQualifications, string? currentJob)
+    private Employee(Guid userId, AcademicDegree degree, string specialization, string? islamicQualifications, string? currentJob, EmployeeRole role)
     {
         UserId = userId;
         Degree = degree;
@@ -34,14 +36,37 @@ public class Employee : BaseEntity
         CurrentJob = currentJob;
         HireDate = DateTime.UtcNow;
         EmploymentStatus = EmploymentStatus.Active;
+        Role = role;
     }
 
-    public static ErrorOr<Employee> Create(Guid userId, AcademicDegree degree, string specialization, string? islamicQualifications,string? currentJob)
+    public static ErrorOr<Employee> Create(Guid userId, AcademicDegree degree, string specialization, string? islamicQualifications, string? currentJob, EmployeeRole role)
     {
         if (userId == Guid.Empty)
             return EmployeeErrors.UserIdRequired;
 
-        return new Employee(userId, degree, specialization, islamicQualifications,currentJob);
+        return new Employee(userId, degree, specialization, islamicQualifications, currentJob, role);
+    }
+
+    public ErrorOr<Success> PromoteToManager(Guid centerId)
+    {
+        if (EmploymentStatus == EmploymentStatus.Resigned)
+            return EmployeeErrors.CannotUpdateResigned;
+
+        Role = EmployeeRole.CenterManager;
+        ManagedCenterId = centerId;
+        MarkAsUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> DemoteToSupervisor()
+    {
+        if (Role != EmployeeRole.CenterManager)
+            return EmployeeErrors.NotAManager;
+
+        Role = EmployeeRole.Supervisor;
+        ManagedCenterId = null;
+        MarkAsUpdated();
+        return Result.Success;
     }
 
     public ErrorOr<Success> Resign()
@@ -50,50 +75,50 @@ public class Employee : BaseEntity
             return EmployeeErrors.AlreadyResigned;
 
         EmploymentStatus = EmploymentStatus.Resigned;
+        ManagedCenterId = null;
         MarkAsUpdated();
         return Result.Success;
     }
 
-public ErrorOr<Success> UpdateQualifications(
-    AcademicDegree? degree, 
-    string? specialization, 
-    string? islamicQualifications)
-{
-    if (EmploymentStatus == EmploymentStatus.Resigned)
-        return EmployeeErrors.CannotUpdateResigned;
+    public ErrorOr<Success> UpdateQualifications(AcademicDegree? degree, string? specialization, string? islamicQualifications)
+    {
+        if (EmploymentStatus == EmploymentStatus.Resigned)
+            return EmployeeErrors.CannotUpdateResigned;
 
-    if (degree.HasValue)
-        Degree = degree.Value;
-    
-    if (!string.IsNullOrWhiteSpace(specialization))
-        Specialization = specialization;
-    
-    if (islamicQualifications != null)
-        IslamicQualifications = islamicQualifications;
+        if (degree.HasValue)
+            Degree = degree.Value;
 
-    MarkAsUpdated();
-    return Result.Success;
-}
+        if (!string.IsNullOrWhiteSpace(specialization))
+            Specialization = specialization;
 
-public ErrorOr<Success> UpdateCurrentJob(string? newJob)
-{
-    if (EmploymentStatus == EmploymentStatus.Resigned)
-        return EmployeeErrors.CannotUpdateResigned;
+        if (islamicQualifications != null)
+            IslamicQualifications = islamicQualifications;
 
-    CurrentJob = newJob;
-    MarkAsUpdated();
-    return Result.Success;
-}
+        MarkAsUpdated();
+        return Result.Success;
+    }
 
-public ErrorOr<Success> Reactivate()
-{
-    if (EmploymentStatus != EmploymentStatus.Resigned)
-        return EmployeeErrors.NotResigned;
+    public ErrorOr<Success> UpdateCurrentJob(string? newJob)
+    {
+        if (EmploymentStatus == EmploymentStatus.Resigned)
+            return EmployeeErrors.CannotUpdateResigned;
 
-    EmploymentStatus = EmploymentStatus.Active;
-    MarkAsUpdated();
-    return Result.Success;
-}
+        CurrentJob = newJob;
+        MarkAsUpdated();
+        return Result.Success;
+    }
 
-public bool CanBeSupervisor() => EmploymentStatus == EmploymentStatus.Active;
+    public ErrorOr<Success> Reactivate()
+    {
+        if (EmploymentStatus != EmploymentStatus.Resigned)
+            return EmployeeErrors.NotResigned;
+
+        EmploymentStatus = EmploymentStatus.Active;
+        MarkAsUpdated();
+        return Result.Success;
+    }
+
+    public bool CanBeSupervisor() => EmploymentStatus == EmploymentStatus.Active;
+    public bool IsManager() => Role == EmployeeRole.CenterManager;
+    public bool IsSupervisor() => Role == EmployeeRole.Supervisor;
 }

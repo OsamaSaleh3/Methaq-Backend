@@ -1,5 +1,4 @@
 using ErrorOr;
-using System;
 
 namespace Methaq.Domain.AttendanceRecords;
 
@@ -9,11 +8,11 @@ public static class AttendanceRecordErrors
         code: "Attendance.StudentId",
         description: "Student ID is required.");
 
-    public static readonly Error SectionIdRequired = Error.Validation(
-        code: "Attendance.SectionId",
-        description: "Section ID is required.");
+    public static readonly Error LectureIdRequired = Error.Validation(
+        code: "Attendance.LectureId",
+        description: "Lecture ID is required.");
 
-    public static readonly Error DateCannotBeInFuture = Error.Validation(
-        code: "Attendance.Date",
-        description: "Attendance date cannot be in the future.");
+    public static readonly Error ExcuseReasonRequired = Error.Validation(
+        code: "Attendance.ExcuseReason",
+        description: "Excuse reason is required when status is Excused.");
 }

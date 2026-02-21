@@ -8,7 +8,7 @@ namespace Methaq.Domain.Sections.enums
     {
         Beginner,       
         Elementary,     
-        Intermediate,   
+        Intermediate,  
         Advanced,       
         Memorized       
     }

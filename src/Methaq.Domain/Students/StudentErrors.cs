@@ -1,5 +1,4 @@
 using ErrorOr;
-using System;
 
 namespace Methaq.Domain.Students;
 
@@ -9,23 +8,23 @@ public static class StudentErrors
         code: "Student.UserId",
         description: "User ID cannot be empty.");
 
+    public static readonly Error GuardianNameRequired = Error.Validation(
+        code: "Student.GuardianName",
+        description: "Guardian name is required.");
+
+    public static readonly Error GuardianPhoneRequired = Error.Validation(
+        code: "Student.GuardianPhone",
+        description: "Guardian phone is required.");
+
     public static readonly Error NotAssignedToSection = Error.Conflict(
         code: "Student.NotAssigned",
         description: "Student is not assigned to any section.");
-
-    public static readonly Error TaskNotFound = Error.NotFound(
-        code: "Student.TaskNotFound",
-        description: "Task not found.");
-
-    public static readonly Error ParentNameRequired = Error.Validation(
-        code: "Student.ParentName",
-        description: "Parent name is required.");
 
     public static readonly Error InvalidSectionId = Error.Validation(
         code: "Student.SectionId",
         description: "Section ID is invalid.");
 
-    public static readonly Error TaskCannotBeNull = Error.Validation(
-        code: "Student.TaskNull",
-        description: "Task cannot be null");
+    public static readonly Error AlreadyInSection = Error.Conflict(
+        code: "Student.AlreadyInSection",
+        description: "Student is already assigned to a section. Must leave current section first.");
 }

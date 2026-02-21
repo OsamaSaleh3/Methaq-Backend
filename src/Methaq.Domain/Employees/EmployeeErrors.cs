@@ -1,5 +1,4 @@
 using ErrorOr;
-using System;
 
 namespace Methaq.Domain.Employees;
 
@@ -20,4 +19,8 @@ public static class EmployeeErrors
     public static readonly Error NotResigned = Error.Validation(
         code: "Employee.NotResigned",
         description: "Only resigned employees can be reactivated.");
+
+    public static readonly Error NotAManager = Error.Conflict(
+        code: "Employee.NotAManager",
+        description: "Employee is not a center manager.");
 }
