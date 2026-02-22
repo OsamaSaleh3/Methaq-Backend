@@ -7,7 +7,7 @@ namespace Methaq.Domain.Notifications;
 
 public class Notification : BaseEntity
 {
-    public Guid UserId { get; private set; }
+    public string UserId { get; private set; } = null!;
     public ApplicationUser User { get; private set; } = null!;
     public string Title { get; private set; } = null!;
     public string Content { get; private set; } = null!;
@@ -17,7 +17,7 @@ public class Notification : BaseEntity
 
     protected Notification() { }
 
-    private Notification(Guid userId, string title, string content, NotificationType type, Guid? relatedEntityId)
+    private Notification(string userId, string title, string content, NotificationType type, Guid? relatedEntityId)
     {
         UserId = userId;
         Title = title;
@@ -27,9 +27,9 @@ public class Notification : BaseEntity
         RelatedEntityId = relatedEntityId;
     }
 
-    public static ErrorOr<Notification> Create(Guid userId, string title, string content, NotificationType type, Guid? relatedEntityId = null)
+    public static ErrorOr<Notification> Create(string userId, string title, string content, NotificationType type, Guid? relatedEntityId = null)
     {
-        if (userId == Guid.Empty)
+        if (string.IsNullOrWhiteSpace(userId))
             return NotificationErrors.UserIdRequired;
 
         if (string.IsNullOrWhiteSpace(title))

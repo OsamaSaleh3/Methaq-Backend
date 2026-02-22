@@ -8,7 +8,7 @@ namespace Methaq.Domain.Employees;
 
 public class Employee : BaseEntity
 {
-    public Guid UserId { get; private set; }
+    public string UserId { get; private set; } = null!;
     public ApplicationUser User { get; private set; } = null!;
 
     public AcademicDegree Degree { get; private set; }
@@ -27,7 +27,7 @@ public class Employee : BaseEntity
 
     protected Employee() { }
 
-    private Employee(Guid userId, AcademicDegree degree, string specialization, string? islamicQualifications, string? currentJob, EmployeeRole role)
+    private Employee(string userId, AcademicDegree degree, string specialization, string? islamicQualifications, string? currentJob, EmployeeRole role)
     {
         UserId = userId;
         Degree = degree;
@@ -39,9 +39,9 @@ public class Employee : BaseEntity
         Role = role;
     }
 
-    public static ErrorOr<Employee> Create(Guid userId, AcademicDegree degree, string specialization, string? islamicQualifications, string? currentJob, EmployeeRole role)
+    public static ErrorOr<Employee> Create(string userId, AcademicDegree degree, string specialization, string? islamicQualifications, string? currentJob, EmployeeRole role)
     {
-        if (userId == Guid.Empty)
+        if (string.IsNullOrWhiteSpace(userId))
             return EmployeeErrors.UserIdRequired;
 
         return new Employee(userId, degree, specialization, islamicQualifications, currentJob, role);

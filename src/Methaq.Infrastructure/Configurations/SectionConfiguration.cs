@@ -1,6 +1,7 @@
 using Methaq.Domain.Sections;
 using Methaq.Domain.Sections.enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Methaq.Infrastructure.Configurations;
@@ -47,7 +48,14 @@ public class SectionConfiguration : IEntityTypeConfiguration<Section>
                     str => str.Split(",", StringSplitOptions.RemoveEmptyEntries)
                               .Select(d => (DayOfWeek)int.Parse(d))
                               .ToList()
-                );
+                                        )
+                        .Metadata.SetValueComparer(
+                            new ValueComparer<List<DayOfWeek>>(
+                                (c1, c2) => c1!.SequenceEqual(c2!),
+                                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                                c => c.ToList()
+                            )
+    );
         });
 
         builder.HasMany(s => s.Lectures)

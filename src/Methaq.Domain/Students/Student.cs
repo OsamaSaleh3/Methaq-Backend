@@ -8,7 +8,7 @@ namespace Methaq.Domain.Students;
 
 public class Student : BaseEntity
 {
-    public Guid UserId { get; private set; }
+    public string UserId { get; private set; } = null!;
     public ApplicationUser User { get; private set; } = null!;
     public string GuardianName { get; private set; } = null!;
     public string GuardianPhone { get; private set; } = null!;
@@ -22,7 +22,7 @@ public class Student : BaseEntity
    
     protected Student() { }
 
-    private Student(Guid userId, string guardianName, string guardianPhone, string? guardianEmail, string academicLevel)
+    private Student(string userId, string guardianName, string guardianPhone, string? guardianEmail, string academicLevel)
     {
         UserId = userId;
         GuardianName = guardianName;
@@ -31,9 +31,9 @@ public class Student : BaseEntity
         AcademicLevel = academicLevel;
     }
 
-    public static ErrorOr<Student> Create(Guid userId, string guardianName, string guardianPhone, string? guardianEmail, string academicLevel)
+    public static ErrorOr<Student> Create(string userId, string guardianName, string guardianPhone, string? guardianEmail, string academicLevel)
     {
-        if (userId == Guid.Empty)
+        if (string.IsNullOrEmpty(userId))
             return StudentErrors.UserIdRequired;
 
         if (string.IsNullOrWhiteSpace(guardianName))

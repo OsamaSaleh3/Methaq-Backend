@@ -1,22 +1,43 @@
 ﻿using Methaq.Domain.ApplicationUsers;
+using Methaq.Domain.AttendanceRecords;
+using Methaq.Domain.CenterEnrollmentRequests;
+using Methaq.Domain.Employees;
+using Methaq.Domain.FinalReports;
+using Methaq.Domain.GroupChats;
+using Methaq.Domain.Lectures;
+using Methaq.Domain.MemorizationTasks;
+using Methaq.Domain.Notifications;
+using Methaq.Domain.QuranCenters;
+using Methaq.Domain.Sections;
+using Methaq.Domain.Students;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Methaq.Infrastructure.Common.Persistence
+namespace Methaq.Infrastructure.Common.Persistence;
+
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 {
-    public class ApplicationDbContext:IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext() { }
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("YourConnectionStringHere");
-            }
-        }
+    public DbSet<Employee> Employees => Set<Employee>();
+    public DbSet<Student> Students => Set<Student>();
+    public DbSet<QuranCenter> QuranCenters => Set<QuranCenter>();
+    public DbSet<Section> Sections => Set<Section>();
+    public DbSet<Lecture> Lectures => Set<Lecture>();
+    public DbSet<AttendanceRecord> AttendanceRecords => Set<AttendanceRecord>();
+    public DbSet<UnifiedTask> UnifiedTasks => Set<UnifiedTask>();
+    public DbSet<StudentTaskEvaluation> StudentTaskEvaluations => Set<StudentTaskEvaluation>();
+    public DbSet<CenterEnrollmentRequest> CenterEnrollmentRequests => Set<CenterEnrollmentRequest>();
+    public DbSet<FinalReport> FinalReports => Set<FinalReport>();
+    public DbSet<StudentFinalReport> StudentFinalReports => Set<StudentFinalReport>();
+    public DbSet<GroupChat> GroupChats => Set<GroupChat>();
+    public DbSet<GroupMessage> GroupMessages => Set<GroupMessage>();
+    public DbSet<Notification> Notifications => Set<Notification>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }
