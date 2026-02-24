@@ -190,7 +190,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("AttendanceRecords");
+                    b.ToTable("AttendanceRecords", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.CenterEnrollmentRequests.CenterEnrollmentRequest", b =>
@@ -228,7 +228,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("CenterEnrollmentRequests");
+                    b.ToTable("CenterEnrollmentRequests", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.Employees.Employee", b =>
@@ -283,7 +283,7 @@ namespace Methaq.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Employees");
+                    b.ToTable("Employees", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.FinalReports.FinalReport", b =>
@@ -320,7 +320,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("FinalReports");
+                    b.ToTable("FinalReports", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.FinalReports.StudentFinalReport", b =>
@@ -351,7 +351,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("FinalReportId");
 
-                    b.ToTable("StudentFinalReports");
+                    b.ToTable("StudentFinalReports", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.GroupChats.GroupChat", b =>
@@ -378,7 +378,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("GroupChats");
+                    b.ToTable("GroupChats", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.GroupChats.GroupMessage", b =>
@@ -423,7 +423,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("GroupMessages");
+                    b.ToTable("GroupMessages", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.Lectures.Lecture", b =>
@@ -462,7 +462,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("Lectures");
+                    b.ToTable("Lectures", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.MemorizationTasks.StudentTaskEvaluation", b =>
@@ -487,7 +487,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("UnifiedTaskId");
 
-                    b.ToTable("StudentTaskEvaluations");
+                    b.ToTable("StudentTaskEvaluations", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.MemorizationTasks.UnifiedTask", b =>
@@ -539,7 +539,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("UnifiedTasks");
+                    b.ToTable("UnifiedTasks", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.Notifications.Notification", b =>
@@ -584,7 +584,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.QuranCenters.QuranCenter", b =>
@@ -630,7 +630,7 @@ namespace Methaq.Infrastructure.Migrations
                     b.HasIndex("ManagerId")
                         .IsUnique();
 
-                    b.ToTable("QuranCenters");
+                    b.ToTable("QuranCenters", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.Sections.Section", b =>
@@ -670,7 +670,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("Sections");
+                    b.ToTable("Sections", (string)null);
                 });
 
             modelBuilder.Entity("Methaq.Domain.Students.Student", b =>
@@ -718,7 +718,7 @@ namespace Methaq.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1070,7 +1070,7 @@ namespace Methaq.Infrastructure.Migrations
 
                             b1.HasKey("UnifiedTaskId");
 
-                            b1.ToTable("UnifiedTasks");
+                            b1.ToTable("UnifiedTasks", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UnifiedTaskId");
@@ -1139,7 +1139,7 @@ namespace Methaq.Infrastructure.Migrations
 
                             b1.HasKey("SectionId");
 
-                            b1.ToTable("Sections");
+                            b1.ToTable("Sections", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("SectionId");

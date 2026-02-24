@@ -17,7 +17,7 @@ namespace Methaq.Domain.ApplicationUsers
         public string? Address { get; set; }
 
         public AccountStatus AccountStatus { get; set; } = AccountStatus.Pending;
-
+      
         public Employee? Employee { get; set; }
         public Student? Student { get; set; }
     }
