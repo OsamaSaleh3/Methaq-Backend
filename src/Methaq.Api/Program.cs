@@ -1,4 +1,3 @@
-using Methaq.Application.Interfaces;
 using Methaq.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,8 +7,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddOpenApi();
+
 builder.Services.AddInfrastructure(builder.Configuration);
+
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {

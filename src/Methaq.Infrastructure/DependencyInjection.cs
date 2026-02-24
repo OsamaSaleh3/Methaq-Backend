@@ -1,6 +1,9 @@
 ﻿using Methaq.Application.Interfaces;
+using Methaq.Domain.ApplicationUsers;
 using Methaq.Infrastructure.Common.Persistence;
 using Methaq.Infrastructure.Services.Emails;
+using Methaq.Infrastructure.Services.OTP;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +24,14 @@ namespace Methaq.Infrastructure
                 configuration.GetSection("EmailSettings"));
 
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IOtpService, OtpService>();
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Tokens.EmailConfirmationTokenProvider = TokenOptions.DefaultEmailProvider;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>() 
+            .AddDefaultTokenProviders();
 
             return services;
         }
