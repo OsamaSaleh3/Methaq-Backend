@@ -1,4 +1,5 @@
 using Methaq.Infrastructure;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -24,6 +25,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
 
 
 app.Run();

@@ -8,6 +8,7 @@ using Methaq.Domain.Lectures;
 using Methaq.Domain.MemorizationTasks;
 using Methaq.Domain.Notifications;
 using Methaq.Domain.QuranCenters;
+using Methaq.Domain.RefreshTokens;
 using Methaq.Domain.Sections;
 using Methaq.Domain.Students;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -34,6 +35,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<GroupChat> GroupChats => Set<GroupChat>();
     public DbSet<GroupMessage> GroupMessages => Set<GroupMessage>();
     public DbSet<Notification> Notifications => Set<Notification>();
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

@@ -8,6 +8,6 @@ namespace Methaq.Application.Interfaces
     public interface IOtpService
     {
         Task<string> GenerateOtpAsync(ApplicationUser user);
-        Task<bool> VerifyOtpAsync(ApplicationUser user, string otp);
+        Task<bool> VerifyAndConfirmEmailAsync(ApplicationUser user, string otp);
     }
 }

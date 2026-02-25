@@ -1,12 +1,18 @@
-﻿using Methaq.Application.Interfaces;
+﻿using Methaq.Application.Common.Interfaces;
+using Methaq.Application.Interfaces;
 using Methaq.Domain.ApplicationUsers;
+using Methaq.Infrastructure.Common;
 using Methaq.Infrastructure.Common.Persistence;
+using Methaq.Infrastructure.Repositories;
 using Methaq.Infrastructure.Services.Emails;
+using Methaq.Infrastructure.Services.JWT;
 using Methaq.Infrastructure.Services.OTP;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,8 +29,7 @@ namespace Methaq.Infrastructure
             services.Configure<EmailSettings>(
                 configuration.GetSection("EmailSettings"));
 
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IOtpService, OtpService>();
+           
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -32,6 +37,41 @@ namespace Methaq.Infrastructure
             })
             .AddEntityFrameworkStores<ApplicationDbContext>() 
             .AddDefaultTokenProviders();
+
+
+            services.Configure<JwtSettings>(
+    configuration.GetSection("JwtSettings"));
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["JwtSettings:Issuer"],
+                    ValidAudience = configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"]!))
+                };
+            });
+
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IOtpService, OtpService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IJwtTokenService, JwtTokenService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+
+
 
             return services;
         }
