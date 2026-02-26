@@ -35,7 +35,7 @@ public class LectureConfiguration : IEntityTypeConfiguration<Lecture>
             .HasForeignKey(a => a.LectureId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(l => l.UnifiedTasks)
+        builder.HasMany(l => l.SectionTasks)
             .WithOne()
             .HasForeignKey(t => t.LectureId)
             .OnDelete(DeleteBehavior.Cascade);

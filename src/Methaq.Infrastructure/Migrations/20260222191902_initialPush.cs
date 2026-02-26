@@ -456,7 +456,7 @@ namespace Methaq.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UnifiedTasks",
+                name: "SectionTasks",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -479,21 +479,21 @@ namespace Methaq.Infrastructure.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UnifiedTasks", x => x.Id);
+                    table.PrimaryKey("PK_SectionTasks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UnifiedTasks_Employees_AssignedById",
+                        name: "FK_SectionTasks_Employees_AssignedById",
                         column: x => x.AssignedById,
                         principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_UnifiedTasks_Lectures_LectureId",
+                        name: "FK_SectionTasks_Lectures_LectureId",
                         column: x => x.LectureId,
                         principalTable: "Lectures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UnifiedTasks_Sections_SectionId",
+                        name: "FK_SectionTasks_Sections_SectionId",
                         column: x => x.SectionId,
                         principalTable: "Sections",
                         principalColumn: "Id",
@@ -594,14 +594,14 @@ namespace Methaq.Infrastructure.Migrations
                 columns: table => new
                 {
                     StudentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UnifiedTaskId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SectionTaskId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     AchievedMark = table.Column<decimal>(type: "decimal(5,2)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
                     EvaluatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StudentTaskEvaluations", x => new { x.StudentId, x.UnifiedTaskId });
+                    table.PrimaryKey("PK_StudentTaskEvaluations", x => new { x.StudentId, x.SectionTaskId });
                     table.ForeignKey(
                         name: "FK_StudentTaskEvaluations_Students_StudentId",
                         column: x => x.StudentId,
@@ -609,9 +609,9 @@ namespace Methaq.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_StudentTaskEvaluations_UnifiedTasks_UnifiedTaskId",
-                        column: x => x.UnifiedTaskId,
-                        principalTable: "UnifiedTasks",
+                        name: "FK_StudentTaskEvaluations_SectionTasks_SectionTaskId",
+                        column: x => x.SectionTaskId,
+                        principalTable: "SectionTasks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -754,23 +754,23 @@ namespace Methaq.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_StudentTaskEvaluations_UnifiedTaskId",
+                name: "IX_StudentTaskEvaluations_SectionTaskId",
                 table: "StudentTaskEvaluations",
-                column: "UnifiedTaskId");
+                column: "SectionTaskId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UnifiedTasks_AssignedById",
-                table: "UnifiedTasks",
+                name: "IX_SectionTasks_AssignedById",
+                table: "SectionTasks",
                 column: "AssignedById");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UnifiedTasks_LectureId",
-                table: "UnifiedTasks",
+                name: "IX_SectionTasks_LectureId",
+                table: "SectionTasks",
                 column: "LectureId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UnifiedTasks_SectionId",
-                table: "UnifiedTasks",
+                name: "IX_SectionTasks_SectionId",
+                table: "SectionTasks",
                 column: "SectionId");
         }
 
@@ -829,7 +829,7 @@ namespace Methaq.Infrastructure.Migrations
                 name: "Students");
 
             migrationBuilder.DropTable(
-                name: "UnifiedTasks");
+                name: "SectionTasks");
 
             migrationBuilder.DropTable(
                 name: "Lectures");

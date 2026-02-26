@@ -26,7 +26,7 @@ public class RegisterEmployeeCommandHandler : IRequestHandler<RegisterEmployeeCo
     public async Task<ErrorOr<string>> Handle(RegisterEmployeeCommand request, CancellationToken cancellationToken)
     {
         var existingEmail=await _userRepository.IsEmailExistsAsync(request.Email);
-        if(!existingEmail)
+        if(existingEmail)
         {
             return RegisterEmployeeErrors.EmailAlreadyExists;
         }

@@ -1,13 +1,13 @@
-using Methaq.Domain.MemorizationTasks;
-using Methaq.Domain.MemorizationTasks.enums;
+using Methaq.Domain.SectionTasks;
+using Methaq.Domain.SectionTasks.enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Methaq.Infrastructure.Configurations;
 
-public class UnifiedTaskConfiguration : IEntityTypeConfiguration<UnifiedTask>
+public class SectionTaskConfiguration : IEntityTypeConfiguration<SectionTask>
 {
-    public void Configure(EntityTypeBuilder<UnifiedTask> builder)
+    public void Configure(EntityTypeBuilder<SectionTask> builder)
     {
         builder.HasKey(t => t.Id);
 
@@ -62,6 +62,12 @@ public class UnifiedTaskConfiguration : IEntityTypeConfiguration<UnifiedTask>
                 .HasColumnName("RangeEndAyah");
         });
 
+        builder.HasOne(t => t.Student)
+            .WithMany()
+            .HasForeignKey(t => t.StudentId)
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
+
         builder.HasOne(t => t.AssignedBy)
             .WithMany()
             .HasForeignKey(t => t.AssignedById)
@@ -74,7 +80,7 @@ public class UnifiedTaskConfiguration : IEntityTypeConfiguration<UnifiedTask>
 
         builder.HasMany(t => t.Evaluations)
             .WithOne()
-            .HasForeignKey(e => e.UnifiedTaskId)
+            .HasForeignKey(e => e.SectionTaskId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

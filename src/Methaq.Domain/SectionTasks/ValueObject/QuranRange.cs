@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Methaq.Domain.MemorizationTasks.ValueObject
+namespace Methaq.Domain.SectionTasks.ValueObject
 {
     public record QuranRange(
         string Volume,

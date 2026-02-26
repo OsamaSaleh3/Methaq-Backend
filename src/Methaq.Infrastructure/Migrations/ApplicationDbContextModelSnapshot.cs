@@ -190,7 +190,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("AttendanceRecords", (string)null);
+                    b.ToTable("AttendanceRecords");
                 });
 
             modelBuilder.Entity("Methaq.Domain.CenterEnrollmentRequests.CenterEnrollmentRequest", b =>
@@ -228,7 +228,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("CenterEnrollmentRequests", (string)null);
+                    b.ToTable("CenterEnrollmentRequests");
                 });
 
             modelBuilder.Entity("Methaq.Domain.Employees.Employee", b =>
@@ -283,7 +283,7 @@ namespace Methaq.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("Methaq.Domain.FinalReports.FinalReport", b =>
@@ -320,7 +320,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("FinalReports", (string)null);
+                    b.ToTable("FinalReports");
                 });
 
             modelBuilder.Entity("Methaq.Domain.FinalReports.StudentFinalReport", b =>
@@ -351,7 +351,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("FinalReportId");
 
-                    b.ToTable("StudentFinalReports", (string)null);
+                    b.ToTable("StudentFinalReports");
                 });
 
             modelBuilder.Entity("Methaq.Domain.GroupChats.GroupChat", b =>
@@ -378,7 +378,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("GroupChats", (string)null);
+                    b.ToTable("GroupChats");
                 });
 
             modelBuilder.Entity("Methaq.Domain.GroupChats.GroupMessage", b =>
@@ -423,7 +423,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("GroupMessages", (string)null);
+                    b.ToTable("GroupMessages");
                 });
 
             modelBuilder.Entity("Methaq.Domain.Lectures.Lecture", b =>
@@ -462,84 +462,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SectionId");
 
-                    b.ToTable("Lectures", (string)null);
-                });
-
-            modelBuilder.Entity("Methaq.Domain.MemorizationTasks.StudentTaskEvaluation", b =>
-                {
-                    b.Property<Guid>("StudentId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UnifiedTaskId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("AchievedMark")
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<DateTime>("EvaluatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Notes")
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)");
-
-                    b.HasKey("StudentId", "UnifiedTaskId");
-
-                    b.HasIndex("UnifiedTaskId");
-
-                    b.ToTable("StudentTaskEvaluations", (string)null);
-                });
-
-            modelBuilder.Entity("Methaq.Domain.MemorizationTasks.UnifiedTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("AssignedById")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<decimal>("FullMark")
-                        .HasColumnType("decimal(5,2)");
-
-                    b.Property<Guid>("LectureId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("SectionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Types")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignedById");
-
-                    b.HasIndex("LectureId");
-
-                    b.HasIndex("SectionId");
-
-                    b.ToTable("UnifiedTasks", (string)null);
+                    b.ToTable("Lectures");
                 });
 
             modelBuilder.Entity("Methaq.Domain.Notifications.Notification", b =>
@@ -584,7 +507,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications", (string)null);
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("Methaq.Domain.QuranCenters.QuranCenter", b =>
@@ -630,7 +553,128 @@ namespace Methaq.Infrastructure.Migrations
                     b.HasIndex("ManagerId")
                         .IsUnique();
 
-                    b.ToTable("QuranCenters", (string)null);
+                    b.ToTable("QuranCenters");
+                });
+
+            modelBuilder.Entity("Methaq.Domain.RefreshTokens.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRevoked")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Token")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Methaq.Domain.SectionTasks.SectionTask", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("AssignedById")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<decimal>("FullMark")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<Guid>("LectureId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SectionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Types")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedById");
+
+                    b.HasIndex("LectureId");
+
+                    b.HasIndex("SectionId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("SectionTasks");
+                });
+
+            modelBuilder.Entity("Methaq.Domain.SectionTasks.StudentTaskEvaluation", b =>
+                {
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SectionTaskId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("AchievedMark")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime>("EvaluatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.HasKey("StudentId", "SectionTaskId");
+
+                    b.HasIndex("SectionTaskId");
+
+                    b.ToTable("StudentTaskEvaluations");
                 });
 
             modelBuilder.Entity("Methaq.Domain.Sections.Section", b =>
@@ -670,7 +714,7 @@ namespace Methaq.Infrastructure.Migrations
 
                     b.HasIndex("SupervisorId");
 
-                    b.ToTable("Sections", (string)null);
+                    b.ToTable("Sections");
                 });
 
             modelBuilder.Entity("Methaq.Domain.Students.Student", b =>
@@ -718,7 +762,7 @@ namespace Methaq.Infrastructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Students", (string)null);
+                    b.ToTable("Students");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -1000,22 +1044,40 @@ namespace Methaq.Infrastructure.Migrations
                     b.Navigation("Section");
                 });
 
-            modelBuilder.Entity("Methaq.Domain.MemorizationTasks.StudentTaskEvaluation", b =>
+            modelBuilder.Entity("Methaq.Domain.Notifications.Notification", b =>
                 {
-                    b.HasOne("Methaq.Domain.Students.Student", null)
+                    b.HasOne("Methaq.Domain.ApplicationUsers.ApplicationUser", "User")
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Methaq.Domain.QuranCenters.QuranCenter", b =>
+                {
+                    b.HasOne("Methaq.Domain.Employees.Employee", "Manager")
+                        .WithOne()
+                        .HasForeignKey("Methaq.Domain.QuranCenters.QuranCenter", "ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Methaq.Domain.MemorizationTasks.UnifiedTask", null)
-                        .WithMany("Evaluations")
-                        .HasForeignKey("UnifiedTaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Manager");
                 });
 
-            modelBuilder.Entity("Methaq.Domain.MemorizationTasks.UnifiedTask", b =>
+            modelBuilder.Entity("Methaq.Domain.RefreshTokens.RefreshToken", b =>
+                {
+                    b.HasOne("Methaq.Domain.ApplicationUsers.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Methaq.Domain.SectionTasks.SectionTask", b =>
                 {
                     b.HasOne("Methaq.Domain.Employees.Employee", "AssignedBy")
                         .WithMany()
@@ -1024,7 +1086,7 @@ namespace Methaq.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Methaq.Domain.Lectures.Lecture", null)
-                        .WithMany("UnifiedTasks")
+                        .WithMany("SectionTasks")
                         .HasForeignKey("LectureId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1035,9 +1097,14 @@ namespace Methaq.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.OwnsOne("Methaq.Domain.MemorizationTasks.ValueObject.QuranRange", "Range", b1 =>
+                    b.HasOne("Methaq.Domain.Students.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.OwnsOne("Methaq.Domain.SectionTasks.ValueObject.QuranRange", "Range", b1 =>
                         {
-                            b1.Property<Guid>("UnifiedTaskId")
+                            b1.Property<Guid>("SectionTaskId")
                                 .HasColumnType("uniqueidentifier");
 
                             b1.Property<int>("EndAyah")
@@ -1068,12 +1135,12 @@ namespace Methaq.Infrastructure.Migrations
                                 .HasColumnType("nvarchar(50)")
                                 .HasColumnName("RangeVolume");
 
-                            b1.HasKey("UnifiedTaskId");
+                            b1.HasKey("SectionTaskId");
 
-                            b1.ToTable("UnifiedTasks", (string)null);
+                            b1.ToTable("SectionTasks");
 
                             b1.WithOwner()
-                                .HasForeignKey("UnifiedTaskId");
+                                .HasForeignKey("SectionTaskId");
                         });
 
                     b.Navigation("AssignedBy");
@@ -1081,28 +1148,23 @@ namespace Methaq.Infrastructure.Migrations
                     b.Navigation("Range");
 
                     b.Navigation("Section");
+
+                    b.Navigation("Student");
                 });
 
-            modelBuilder.Entity("Methaq.Domain.Notifications.Notification", b =>
+            modelBuilder.Entity("Methaq.Domain.SectionTasks.StudentTaskEvaluation", b =>
                 {
-                    b.HasOne("Methaq.Domain.ApplicationUsers.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("Methaq.Domain.SectionTasks.SectionTask", null)
+                        .WithMany("Evaluations")
+                        .HasForeignKey("SectionTaskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Methaq.Domain.QuranCenters.QuranCenter", b =>
-                {
-                    b.HasOne("Methaq.Domain.Employees.Employee", "Manager")
-                        .WithOne()
-                        .HasForeignKey("Methaq.Domain.QuranCenters.QuranCenter", "ManagerId")
+                    b.HasOne("Methaq.Domain.Students.Student", null)
+                        .WithMany()
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Manager");
                 });
 
             modelBuilder.Entity("Methaq.Domain.Sections.Section", b =>
@@ -1139,7 +1201,7 @@ namespace Methaq.Infrastructure.Migrations
 
                             b1.HasKey("SectionId");
 
-                            b1.ToTable("Sections", (string)null);
+                            b1.ToTable("Sections");
 
                             b1.WithOwner()
                                 .HasForeignKey("SectionId");
@@ -1248,12 +1310,7 @@ namespace Methaq.Infrastructure.Migrations
                 {
                     b.Navigation("AttendanceRecords");
 
-                    b.Navigation("UnifiedTasks");
-                });
-
-            modelBuilder.Entity("Methaq.Domain.MemorizationTasks.UnifiedTask", b =>
-                {
-                    b.Navigation("Evaluations");
+                    b.Navigation("SectionTasks");
                 });
 
             modelBuilder.Entity("Methaq.Domain.QuranCenters.QuranCenter", b =>
@@ -1261,6 +1318,11 @@ namespace Methaq.Infrastructure.Migrations
                     b.Navigation("EnrollmentRequests");
 
                     b.Navigation("Sections");
+                });
+
+            modelBuilder.Entity("Methaq.Domain.SectionTasks.SectionTask", b =>
+                {
+                    b.Navigation("Evaluations");
                 });
 
             modelBuilder.Entity("Methaq.Domain.Sections.Section", b =>

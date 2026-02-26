@@ -1,4 +1,4 @@
-using Methaq.Domain.MemorizationTasks;
+using Methaq.Domain.SectionTasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,7 +8,7 @@ public class StudentTaskEvaluationConfiguration : IEntityTypeConfiguration<Stude
 {
     public void Configure(EntityTypeBuilder<StudentTaskEvaluation> builder)
     {
-        builder.HasKey(e => new { e.StudentId, e.UnifiedTaskId });
+        builder.HasKey(e => new { e.StudentId, e.SectionTaskId });
 
         builder.Property(e => e.AchievedMark)
             .IsRequired()

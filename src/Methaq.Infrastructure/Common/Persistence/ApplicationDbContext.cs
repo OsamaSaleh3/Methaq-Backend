@@ -5,7 +5,7 @@ using Methaq.Domain.Employees;
 using Methaq.Domain.FinalReports;
 using Methaq.Domain.GroupChats;
 using Methaq.Domain.Lectures;
-using Methaq.Domain.MemorizationTasks;
+using Methaq.Domain.SectionTasks;
 using Methaq.Domain.Notifications;
 using Methaq.Domain.QuranCenters;
 using Methaq.Domain.RefreshTokens;
@@ -27,7 +27,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Section> Sections => Set<Section>();
     public DbSet<Lecture> Lectures => Set<Lecture>();
     public DbSet<AttendanceRecord> AttendanceRecords => Set<AttendanceRecord>();
-    public DbSet<UnifiedTask> UnifiedTasks => Set<UnifiedTask>();
+    public DbSet<SectionTask> SectionTasks => Set<SectionTask>();
     public DbSet<StudentTaskEvaluation> StudentTaskEvaluations => Set<StudentTaskEvaluation>();
     public DbSet<CenterEnrollmentRequest> CenterEnrollmentRequests => Set<CenterEnrollmentRequest>();
     public DbSet<FinalReport> FinalReports => Set<FinalReport>();

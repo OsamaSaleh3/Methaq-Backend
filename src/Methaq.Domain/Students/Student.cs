@@ -1,7 +1,7 @@
 ﻿using ErrorOr;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.Common;
-using Methaq.Domain.MemorizationTasks;
+using Methaq.Domain.SectionTasks;
 using Methaq.Domain.Sections;
 
 namespace Methaq.Domain.Students;

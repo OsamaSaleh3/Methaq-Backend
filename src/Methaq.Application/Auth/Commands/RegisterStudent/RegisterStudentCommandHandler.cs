@@ -27,7 +27,7 @@ public class RegisterStudentCommandHandler : IRequestHandler<RegisterStudentComm
     public async Task<ErrorOr<string>> Handle(RegisterStudentCommand request, CancellationToken cancellationToken)
     {
         var existingUser = await _userRepository.IsEmailExistsAsync(request.Email);
-        if(!existingUser)
+        if(existingUser)
             return RegisterStudentErrors.EmailAlreadyExists;
 
         var user = new ApplicationUser

@@ -50,8 +50,11 @@ public static class DependencyInjection
             };
         });
 
+
+
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
+        services.Configure<SuperAdminSettings>(configuration.GetSection("SuperAdminSettings"));
 
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IOtpService, OtpService>();

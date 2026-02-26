@@ -1,13 +1,14 @@
 ﻿using ErrorOr;
 using Methaq.Domain.Common;
 using Methaq.Domain.Employees;
-using Methaq.Domain.MemorizationTasks.ValueObject;
 using Methaq.Domain.Sections;
-using Methaq.Domain.MemorizationTasks.enums;
+using Methaq.Domain.SectionTasks.enums;
+using Methaq.Domain.SectionTasks.ValueObject;
+using Methaq.Domain.Students;
 
-namespace Methaq.Domain.MemorizationTasks;
+namespace Methaq.Domain.SectionTasks;
 
-public class UnifiedTask : BaseEntity
+public class SectionTask : BaseEntity
 {
     public string Title { get; private set; } = null!;
     public string? Description { get; private set; }
@@ -21,13 +22,15 @@ public class UnifiedTask : BaseEntity
     public Guid AssignedById { get; private set; }
     public Employee AssignedBy { get; private set; } = null!;
     public decimal FullMark { get; private set; }
+    public Guid? StudentId { get; private set; }
+    public Student? Student { get; private set; }
 
     private readonly List<StudentTaskEvaluation> _evaluations = [];
     public IReadOnlyCollection<StudentTaskEvaluation> Evaluations => _evaluations.AsReadOnly();
 
-    protected UnifiedTask() { }
+    protected SectionTask() { }
 
-    private UnifiedTask(string title, string? description, Guid sectionId, Guid lectureId, Guid assignedById, decimal fullMark)
+    private SectionTask(string title, string? description, Guid sectionId, Guid lectureId, Guid assignedById, decimal fullMark)
     {
         Title = title;
         Description = description;
@@ -37,30 +40,30 @@ public class UnifiedTask : BaseEntity
         FullMark = fullMark;
     }
 
-    public static ErrorOr<UnifiedTask> Create(string title, string? description, Guid sectionId, Guid lectureId, Guid assignedById, decimal fullMark = 100)
+    public static ErrorOr<SectionTask> Create(string title, string? description, Guid sectionId, Guid lectureId, Guid assignedById, decimal fullMark = 100)
     {
         if (string.IsNullOrWhiteSpace(title))
-            return UnifiedTaskErrors.TitleRequired;
+            return SectionTaskErrors.TitleRequired;
 
         if (sectionId == Guid.Empty)
-            return UnifiedTaskErrors.SectionIdRequired;
+            return SectionTaskErrors.SectionIdRequired;
 
         if (lectureId == Guid.Empty)
-            return UnifiedTaskErrors.LectureIdRequired;
+            return SectionTaskErrors.LectureIdRequired;
 
         if (assignedById == Guid.Empty)
-            return UnifiedTaskErrors.AssignedByIdRequired;
+            return SectionTaskErrors.AssignedByIdRequired;
 
         if (fullMark <= 0)
-            return UnifiedTaskErrors.InvalidFullMark;
+            return SectionTaskErrors.InvalidFullMark;
 
-        return new UnifiedTask(title, description, sectionId, lectureId, assignedById, fullMark);
+        return new SectionTask(title, description, sectionId, lectureId, assignedById, fullMark);
     }
 
     public ErrorOr<Success> EvaluateStudent(Guid studentId, decimal mark, string? notes)
     {
         if (mark < 0 || mark > FullMark)
-            return UnifiedTaskErrors.InvalidMark(FullMark);
+            return SectionTaskErrors.InvalidMark(FullMark);
 
         var existing = _evaluations.FirstOrDefault(e => e.StudentId == studentId);
         if (existing != null)
@@ -75,22 +78,25 @@ public class UnifiedTask : BaseEntity
         MarkAsUpdated();
         return Result.Success;
     }
+
+    public bool IsForWholeSection() => StudentId is null;
+    public bool IsForSpecificStudent() => StudentId is not null;
 }
 
 public class StudentTaskEvaluation
 {
     public Guid StudentId { get; private set; }
-    public Guid UnifiedTaskId { get; private set; }
+    public Guid SectionTaskId { get; private set; }
     public decimal AchievedMark { get; private set; }
     public string? Notes { get; private set; }
     public DateTime EvaluatedAt { get; private set; }
 
     protected StudentTaskEvaluation() { }
 
-    public StudentTaskEvaluation(Guid studentId, Guid unifiedTaskId, decimal mark, string? notes)
+    public StudentTaskEvaluation(Guid studentId, Guid sectionTaskId, decimal mark, string? notes)
     {
         StudentId = studentId;
-        UnifiedTaskId = unifiedTaskId;
+        SectionTaskId = sectionTaskId;
         AchievedMark = mark;
         Notes = notes;
         EvaluatedAt = DateTime.UtcNow;

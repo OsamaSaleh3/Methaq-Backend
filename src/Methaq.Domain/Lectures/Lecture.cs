@@ -2,7 +2,7 @@ using ErrorOr;
 using Methaq.Domain.AttendanceRecords;
 using Methaq.Domain.Common;
 using Methaq.Domain.Lectures.enums;
-using Methaq.Domain.MemorizationTasks;
+using Methaq.Domain.SectionTasks;
 using Methaq.Domain.Sections;
 
 namespace Methaq.Domain.Lectures;
@@ -19,8 +19,8 @@ public class Lecture : BaseEntity
     public string? Notes { get; private set; }
     public LectureStatus Status { get; private set; }
 
-    private readonly List<UnifiedTask> _unifiedTasks = [];
-    public IReadOnlyCollection<UnifiedTask> UnifiedTasks => _unifiedTasks.AsReadOnly();
+    private readonly List<SectionTask> _SectionTasks = [];
+    public IReadOnlyCollection<SectionTask> SectionTasks => _SectionTasks.AsReadOnly();
 
     private readonly List<AttendanceRecord> _attendanceRecords = [];
     public IReadOnlyCollection<AttendanceRecord> AttendanceRecords => _attendanceRecords.AsReadOnly();
@@ -66,7 +66,7 @@ public class Lecture : BaseEntity
         return Result.Success;
     }
 
-    public ErrorOr<Success> AddUnifiedTask(UnifiedTask task)
+    public ErrorOr<Success> AddSectionTask(SectionTask task)
     {
         if (task == null)
             return LectureErrors.TaskNull;
@@ -74,7 +74,7 @@ public class Lecture : BaseEntity
         if (Status == LectureStatus.Cancelled)
             return LectureErrors.LectureCancelled;
 
-        _unifiedTasks.Add(task);
+        _SectionTasks.Add(task);
         MarkAsUpdated();
         return Result.Success;
     }
