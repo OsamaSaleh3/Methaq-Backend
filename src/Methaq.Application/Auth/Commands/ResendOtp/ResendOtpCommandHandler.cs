@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Emails;
-using Methaq.Application.Interfaces;
+using Methaq.Application.Common.Interfaces;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Methaq.Application.Auth.Commands.ResendOtp;

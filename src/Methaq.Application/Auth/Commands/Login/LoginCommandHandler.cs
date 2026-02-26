@@ -1,9 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Auth.Commands.Login;
-using Methaq.Application.Auth.Commands.Login.Responses;
 using Methaq.Application.Common.Interfaces;
-using Methaq.Application.Interfaces;
 using Methaq.Domain.ApplicationUsers.enums;
 using Methaq.Domain.RefreshTokens;
 

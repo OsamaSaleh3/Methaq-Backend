@@ -1,5 +1,5 @@
 ﻿using MailKit.Net.Smtp;
-using Methaq.Application.Interfaces;
+using Methaq.Application.Common.Interfaces;
 using Microsoft.Extensions.Options;
 using MimeKit;
 

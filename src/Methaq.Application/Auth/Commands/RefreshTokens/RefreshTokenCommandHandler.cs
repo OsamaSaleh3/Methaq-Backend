@@ -1,10 +1,7 @@
 using ErrorOr;
 using MediatR;
-using Methaq.Application.Auth.Commands.RefreshTokens.Responses;
 using Methaq.Application.Common.Interfaces;
-using Methaq.Application.Interfaces;
 using Methaq.Domain.RefreshTokens;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Methaq.Application.Auth.Commands.RefreshTokens;
 

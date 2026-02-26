@@ -1,5 +1,13 @@
 using ErrorOr;
 using MediatR;
-using Methaq.Application.Auth.Queries.GetPendingAccounts.Responses;
 
 public record GetPendingAccountsQuery() : IRequest<ErrorOr<List<PendingAccountResponse>>>;
+
+public record PendingAccountResponse(
+   string UserId,
+   string FullName,
+   string Email,
+   string PhoneNumber,
+   DateTime DateOfBirth,
+   string Role
+);

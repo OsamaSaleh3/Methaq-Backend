@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Methaq.Application.Interfaces
+namespace Methaq.Application.Common.Interfaces
 {
     public interface IUserRepository
     {

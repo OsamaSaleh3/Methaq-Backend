@@ -2,7 +2,6 @@ using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Emails;
 using Methaq.Application.Common.Interfaces;
-using Methaq.Application.Interfaces;
 using Methaq.Domain.ApplicationUsers.enums;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 

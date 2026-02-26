@@ -1,7 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Emails;
-using Methaq.Application.Interfaces;
+using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.ApplicationUsers.enums;
 using Methaq.Domain.Students;

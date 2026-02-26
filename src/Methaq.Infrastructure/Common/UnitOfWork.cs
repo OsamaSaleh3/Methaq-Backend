@@ -1,4 +1,4 @@
-﻿using Methaq.Application.Interfaces;
+﻿using Methaq.Application.Common.Interfaces;
 using Methaq.Infrastructure.Common.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;
 

@@ -1,6 +1,6 @@
 using ErrorOr;
 using MediatR;
-using Methaq.Application.Interfaces;
+using Methaq.Application.Common.Interfaces;
 
 namespace Methaq.Application.Auth.Commands.ConfirmEmail;
 

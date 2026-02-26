@@ -1,5 +1,4 @@
 ﻿using Methaq.Application.Common.Interfaces;
-using Methaq.Application.Interfaces;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Infrastructure.Common;
 using Methaq.Infrastructure.Common.Persistence;

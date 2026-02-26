@@ -1,8 +1,6 @@
 using ErrorOr;
 using MediatR;
-using Methaq.Application.Auth.Queries.GetPendingAccounts.Responses;
 using Methaq.Application.Common.Interfaces;
-using Methaq.Application.Interfaces;
 
 namespace Methaq.Application.Auth.Queries.GetPendingAccounts;
 

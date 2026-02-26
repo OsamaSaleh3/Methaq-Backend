@@ -1,4 +1,4 @@
-﻿using Methaq.Application.Interfaces;
+﻿using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.ApplicationUsers.enums;
 using Methaq.Domain.Employees;
