@@ -19,4 +19,8 @@ public static class AddSupervisorErrors
     public static readonly Error SupervisorNotActive = Error.Conflict(
         code: "QuranCenter.SupervisorNotActive",
         description: "Supervisor is not active.");
+
+    public static readonly Error SupervisorAlreadyAssigned = Error.Conflict(
+    code: "QuranCenter.SupervisorAlreadyAssigned",
+    description: "Supervisor is already assigned to another center.");
 }

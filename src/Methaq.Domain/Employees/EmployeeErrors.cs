@@ -23,4 +23,8 @@ public static class EmployeeErrors
     public static readonly Error NotAManager = Error.Conflict(
         code: "Employee.NotAManager",
         description: "Employee is not a center manager.");
+
+    public static readonly Error AlreadyAssignedToCenter = Error.Conflict(
+   code: "Employee.AlreadyAssignedToCenter",
+   description: "Employee is already assigned to another center.");
 }

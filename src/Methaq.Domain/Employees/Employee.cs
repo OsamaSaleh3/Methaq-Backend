@@ -2,6 +2,7 @@
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.Common;
 using Methaq.Domain.Employees.enums;
+using Methaq.Domain.QuranCenters;
 using Methaq.Domain.Sections;
 
 namespace Methaq.Domain.Employees;
@@ -19,8 +20,8 @@ public class Employee : BaseEntity
     public EmploymentStatus EmploymentStatus { get; private set; }
 
     public EmployeeRole Role { get; private set; }
-
-    public Guid? ManagedCenterId { get; private set; }
+    public Guid? CenterId { get; private set; }      // المركز اللي هو فيه
+    public QuranCenter? Center { get; private set; }
 
     private readonly List<Section> _supervisedSections = [];
     public IReadOnlyCollection<Section> SupervisedSections => _supervisedSections.AsReadOnly();
@@ -47,13 +48,23 @@ public class Employee : BaseEntity
         return new Employee(userId, degree, specialization, islamicQualifications, currentJob, role);
     }
 
+    public ErrorOr<Success> AssignToCenter(Guid centerId)
+    {
+        if (CenterId != null)
+            return EmployeeErrors.AlreadyAssignedToCenter;
+
+        CenterId = centerId;
+        MarkAsUpdated();
+        return Result.Success;
+    }
+
     public ErrorOr<Success> PromoteToManager(Guid centerId)
     {
         if (EmploymentStatus == EmploymentStatus.Resigned)
             return EmployeeErrors.CannotUpdateResigned;
 
         Role = EmployeeRole.CenterManager;
-        ManagedCenterId = centerId;
+        CenterId = centerId;
         MarkAsUpdated();
         return Result.Success;
     }
@@ -64,7 +75,7 @@ public class Employee : BaseEntity
             return EmployeeErrors.NotAManager;
 
         Role = EmployeeRole.Supervisor;
-        ManagedCenterId = null;
+        CenterId = null;
         MarkAsUpdated();
         return Result.Success;
     }
@@ -75,11 +86,16 @@ public class Employee : BaseEntity
             return EmployeeErrors.AlreadyResigned;
 
         EmploymentStatus = EmploymentStatus.Resigned;
-        ManagedCenterId = null;
+        CenterId = null;
         MarkAsUpdated();
         return Result.Success;
     }
 
+    public void RemoveFromCenter()
+    {
+        CenterId = null;
+        MarkAsUpdated();
+    }
     public ErrorOr<Success> UpdateQualifications(AcademicDegree? degree, string? specialization, string? islamicQualifications)
     {
         if (EmploymentStatus == EmploymentStatus.Resigned)

@@ -1,5 +1,6 @@
 ﻿using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.Employees;
+using Methaq.Domain.Employees.enums;
 using Methaq.Infrastructure.Common.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,6 +21,16 @@ namespace Methaq.Infrastructure.Repositories
         public async Task<Employee?> GetByIdAsync(Guid id)
         {
             return await _context.Employees.FindAsync(id);
+        }
+
+        public async Task<List<Employee>> GetAvailableSupervisorsAsync()
+        {
+            return await _context.Employees
+                .Include(e => e.User)
+                .Where(e => e.CenterId == null
+                    && e.EmploymentStatus == EmploymentStatus.Active
+                    && e.Role == EmployeeRole.Supervisor)
+                .ToListAsync();
         }
     }
 }

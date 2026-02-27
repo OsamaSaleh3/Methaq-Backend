@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Interfaces;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Methaq.Application.QuranCenters.Commands.AddSupervisor;
 
@@ -23,13 +24,23 @@ public class AddSupervisorCommandHandler : IRequestHandler<AddSupervisorCommand,
             return AddSupervisorErrors.CenterNotFound;
 
         var employee = await _employeeRepository.GetByIdAsync(request.SupervisorId);
-        if(employee is null)
+
+        if (employee is null)
             return AddSupervisorErrors.SupervisorNotFound;
 
-        if(!employee.CanBeSupervisor())
+        if (employee.CenterId is not null)
+            return AddSupervisorErrors.SupervisorAlreadyAssigned;
+
+        if (!employee.CanBeSupervisor())
             return AddSupervisorErrors.SupervisorNotActive;
 
-        center.AddSupervisor(employee);
+        var assignResult = employee.AssignToCenter(request.CenterId);
+        if (assignResult.IsError)
+            return assignResult.Errors;
+
+        var result = center.AddSupervisor(employee);
+        if (result.IsError)
+            return result.Errors;
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

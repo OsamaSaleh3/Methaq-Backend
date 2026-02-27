@@ -36,7 +36,11 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
             .IsRequired()
             .HasConversion<string>();
 
-        builder.Property(e => e.ManagedCenterId);
+        builder.HasOne(e => e.Center)
+            .WithMany(c => c.Supervisors)
+            .HasForeignKey(e => e.CenterId)
+            .OnDelete(DeleteBehavior.SetNull)
+            .IsRequired(false);
 
         builder.HasMany(e => e.SupervisedSections)
             .WithOne(s => s.Supervisor)
