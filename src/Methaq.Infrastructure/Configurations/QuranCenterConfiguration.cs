@@ -42,10 +42,6 @@ public class QuranCenterConfiguration : IEntityTypeConfiguration<QuranCenter>
             .HasForeignKey(s => s.CenterId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasMany(c => c.Supervisors)
-            .WithMany()
-            .UsingEntity(j => j.ToTable("CenterSupervisors"));
-
         builder.HasMany(c => c.EnrollmentRequests)
             .WithOne(r => r.Center)
             .HasForeignKey(r => r.CenterId)
