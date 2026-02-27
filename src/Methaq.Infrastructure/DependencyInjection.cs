@@ -67,6 +67,8 @@ public static class DependencyInjection
         services.AddScoped<IQuranCenterRepository, QuranCenterRepository>();
         services.AddScoped<IEnrollmentRequestRepository, EnrollmentRequestRepository>();
         services.AddScoped<IStudentRepository, StudentRepository>();
+        services.AddScoped<ISectionRepository, SectionRepository>();
+        services.AddScoped<IGroupChatRepository, GroupChatRepository>();
 
         return services;
     }

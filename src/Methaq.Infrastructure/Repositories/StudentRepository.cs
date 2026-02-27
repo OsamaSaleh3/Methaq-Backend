@@ -20,4 +20,9 @@ public class StudentRepository : IStudentRepository
             .Include(s => s.User)
             .FirstOrDefaultAsync(s => s.Id == id);
     }
+
+    public Task<Student?> GetByIdWithUserAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
 }

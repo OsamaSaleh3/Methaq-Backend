@@ -32,5 +32,10 @@ namespace Methaq.Infrastructure.Repositories
                     && e.Role == EmployeeRole.Supervisor)
                 .ToListAsync();
         }
+
+        public Task<Employee?> GetByIdWithUserAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

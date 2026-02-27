@@ -56,4 +56,9 @@ public class EnrollmentRequestRepository : IEnrollmentRequestRepository
             .OrderByDescending(r => r.CreatedAt)
             .ToListAsync();
     }
+
+    public Task<CenterEnrollmentRequest?> GetApprovedRequestAsync(Guid studentId, Guid centerId)
+    {
+        throw new NotImplementedException();
+    }
 }

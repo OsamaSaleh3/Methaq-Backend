@@ -9,4 +9,5 @@ public interface IEnrollmentRequestRepository
     Task<List<CenterEnrollmentRequest>> GetByCenterIdAsync(Guid centerId);
     Task<List<CenterEnrollmentRequest>> GetByStudentIdAsync(Guid studentId);
     Task AddAsync(CenterEnrollmentRequest request, CancellationToken cancellationToken);
+    Task<CenterEnrollmentRequest?> GetApprovedRequestAsync(Guid studentId, Guid centerId);
 }
