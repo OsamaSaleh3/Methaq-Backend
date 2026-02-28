@@ -23,14 +23,14 @@ namespace Methaq.Domain.FinalReports
 
         protected StudentFinalReport() { }
 
-        public StudentFinalReport(Guid studentId, Guid finalReportId, decimal memorization, decimal attendance, decimal participation, decimal behavior, string? notes)
+        public StudentFinalReport(Guid studentId, Guid finalReportId, decimal memorizationScore, decimal attendanceScore, decimal participationScore, decimal behaviorScore, string? notes)
         {
             StudentId = studentId;
             FinalReportId = finalReportId;
-            MemorizationScore = memorization;
-            AttendanceScore = attendance;
-            ParticipationScore = participation;
-            BehaviorScore = behavior;
+            MemorizationScore = memorizationScore;
+            AttendanceScore = attendanceScore;
+            ParticipationScore = participationScore;
+            BehaviorScore = behaviorScore;
             SupervisorNotes = notes;
         }
     }

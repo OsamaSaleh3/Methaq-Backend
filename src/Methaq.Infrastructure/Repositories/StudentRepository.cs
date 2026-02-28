@@ -17,12 +17,13 @@ public class StudentRepository : IStudentRepository
     public async Task<Student?> GetByIdAsync(Guid id)
     {
         return await _context.Students
-            .Include(s => s.User)
             .FirstOrDefaultAsync(s => s.Id == id);
     }
 
-    public Task<Student?> GetByIdWithUserAsync(Guid id)
+    public async Task<Student?> GetByIdWithUserAsync(Guid id)
     {
-        throw new NotImplementedException();
+        return await _context.Students
+            .Include(s => s.User)
+            .FirstOrDefaultAsync(s => s.Id == id);
     }
 }

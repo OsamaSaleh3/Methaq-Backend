@@ -33,9 +33,11 @@ namespace Methaq.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public Task<Employee?> GetByIdWithUserAsync(Guid id)
+        public async Task<Employee?> GetByIdWithUserAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.Employees
+            .Include(s => s.User)
+            .FirstOrDefaultAsync(s => s.Id == id);
         }
     }
 }

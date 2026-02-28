@@ -57,8 +57,12 @@ public class EnrollmentRequestRepository : IEnrollmentRequestRepository
             .ToListAsync();
     }
 
-    public Task<CenterEnrollmentRequest?> GetApprovedRequestAsync(Guid studentId, Guid centerId)
+    public async Task<CenterEnrollmentRequest?> GetApprovedRequestAsync(Guid studentId, Guid centerId)
     {
-        throw new NotImplementedException();
+        return await _context.CenterEnrollmentRequests
+            .FirstOrDefaultAsync(r =>
+                r.StudentId == studentId &&
+                r.CenterId == centerId &&
+                r.Status == EnrollmentRequestStatus.Approved);
     }
 }
