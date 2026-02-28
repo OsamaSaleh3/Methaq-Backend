@@ -36,6 +36,13 @@ namespace Methaq.Infrastructure.Repositories
                 .FirstOrDefaultAsync(l => l.Id == id);
         }
 
+        public Task<Lecture?> GetByIdWithSectionAsync(Guid id)
+        {
+            return _context.Lectures
+                .Include(l => l.Section)
+                .FirstOrDefaultAsync(l => l.Id == id);
+        }
+
         public async Task<List<Lecture>> GetBySectionIdAsync(Guid sectionId)
         {
             return await _context.Lectures

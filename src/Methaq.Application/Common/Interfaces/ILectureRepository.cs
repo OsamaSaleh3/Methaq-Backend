@@ -8,4 +8,5 @@ public interface ILectureRepository
     Task<Lecture?> GetByIdWithDetailsAsync(Guid id);
     Task<List<Lecture>> GetBySectionIdAsync(Guid sectionId);
     Task AddAsync(Lecture lecture, CancellationToken cancellationToken);
+    Task<Lecture?> GetByIdWithSectionAsync(Guid id);
 }

@@ -1,5 +1,6 @@
 ﻿using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.ApplicationUsers;
+using Methaq.Domain.AttendanceRecords;
 using Methaq.Infrastructure.Common;
 using Methaq.Infrastructure.Common.Persistence;
 using Methaq.Infrastructure.Repositories;
@@ -70,6 +71,7 @@ public static class DependencyInjection
         services.AddScoped<ISectionRepository, SectionRepository>();
         services.AddScoped<IGroupChatRepository, GroupChatRepository>();
         services.AddScoped<ILectureRepository, LectureRepository>();
+        services.AddScoped<IAttendanceRecordRepository, AttendanceRecordRepository>();
 
         return services;
     }
