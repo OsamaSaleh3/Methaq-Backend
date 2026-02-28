@@ -72,6 +72,7 @@ public static class DependencyInjection
         services.AddScoped<IGroupChatRepository, GroupChatRepository>();
         services.AddScoped<ILectureRepository, LectureRepository>();
         services.AddScoped<IAttendanceRecordRepository, AttendanceRecordRepository>();
+        services.AddScoped<ISectionTaskRepository, SectionTaskRepository>();
 
         return services;
     }

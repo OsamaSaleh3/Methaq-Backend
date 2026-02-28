@@ -1,5 +1,4 @@
 using Methaq.Domain.SectionTasks;
-using Methaq.Domain.SectionTasks.enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -79,7 +78,7 @@ public class SectionTaskConfiguration : IEntityTypeConfiguration<SectionTask>
             .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(t => t.Evaluations)
-            .WithOne()
+            .WithOne(e => e.SectionTask)
             .HasForeignKey(e => e.SectionTaskId)
             .OnDelete(DeleteBehavior.Cascade);
     }

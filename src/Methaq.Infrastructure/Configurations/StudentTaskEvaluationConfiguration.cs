@@ -20,7 +20,12 @@ public class StudentTaskEvaluationConfiguration : IEntityTypeConfiguration<Stude
         builder.Property(e => e.EvaluatedAt)
             .IsRequired();
 
-        builder.HasOne<Domain.Students.Student>()
+        builder.HasOne(e => e.SectionTask)
+              .WithMany(t => t.Evaluations)
+              .HasForeignKey(e => e.SectionTaskId)
+              .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(e => e.Student)
             .WithMany()
             .HasForeignKey(e => e.StudentId)
             .OnDelete(DeleteBehavior.Restrict);

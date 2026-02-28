@@ -86,7 +86,9 @@ public class SectionTask : BaseEntity
 public class StudentTaskEvaluation
 {
     public Guid StudentId { get; private set; }
+    public Student Student { get; private set; } = null!;
     public Guid SectionTaskId { get; private set; }
+    public SectionTask SectionTask { get; private set; } = null!;
     public decimal AchievedMark { get; private set; }
     public string? Notes { get; private set; }
     public DateTime EvaluatedAt { get; private set; }
