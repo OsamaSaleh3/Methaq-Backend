@@ -21,8 +21,21 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        if (connectionString?.StartsWith("postgresql://") == true ||
+            connectionString?.StartsWith("postgres://") == true)
+        {
+            var uri = new Uri(connectionString);
+            connectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.AbsolutePath.TrimStart('/')};Username={uri.UserInfo.Split(':')[0]};Password={uri.UserInfo.Split(':')[1]};SSL Mode=Require;Trust Server Certificate=true";
+        }
+
         services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(connectionString));
+
+        //services.AddDbContext<ApplicationDbContext>(options =>
+        //        options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
 
         services.AddIdentity<ApplicationUser, IdentityRole>(options =>

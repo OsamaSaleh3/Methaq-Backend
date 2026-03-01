@@ -40,11 +40,11 @@ var app = builder.Build();
 
 await DbInitializer.InitializeAsync(app.Services);
 
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 app.UseAuthentication();
