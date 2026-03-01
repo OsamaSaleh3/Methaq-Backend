@@ -12,6 +12,9 @@
 *.sln.docstates
 *.env
 
+**/Properties/launchSettings.json
+secrets.json
+
 # App Settings
 appsettings.Development.json
 

@@ -1,6 +1,7 @@
 using Methaq.Application;
 using Methaq.Infrastructure;
 using Methaq.Infrastructure.Common.Persistence;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,6 +53,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 
+
+using var scope = app.Services.CreateScope();
+var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); 
+dbContext.Database.Migrate();
 
 app.Run();
 
