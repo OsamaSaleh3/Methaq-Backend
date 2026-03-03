@@ -2,7 +2,7 @@
 
 public record RecordAttendanceRequest(
     Guid StudentId,
-    string Status,
+    int Status,
     string? ExcuseReason,
     string? Notes
 );

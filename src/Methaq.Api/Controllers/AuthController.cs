@@ -65,11 +65,11 @@ public class AuthController : BaseController
             request.DateOfBirth,
             request.NationalId,
             request.Address,
-             Enum.Parse<AcademicDegree>(request.Degree),
+             (AcademicDegree)(request.Degree),
             request.Specialization,
             request.IslamicQualifications,
             request.CurrentJob,
-             Enum.Parse<EmployeeRole>(request.Role));
+             (EmployeeRole)(request.Role));
 
         var result = await _mediator.Send(command);
         return HandleResult(result);

@@ -16,10 +16,10 @@ namespace Methaq.Contracts.Auth
     DateTime DateOfBirth,
     string? NationalId,
     string? Address,
-    string Degree,
+    int Degree,
     string Specialization,
     string? IslamicQualifications,
     string? CurrentJob,
-    string Role
+    int Role
 );
 }

@@ -1,7 +1,7 @@
 namespace Methaq.Contracts.Sections;
 public record CreateSectionRequest(
     string Name,
-    string AcademicLevel,
+    int AcademicLevel,
     Guid CenterId,
     Guid SupervisorId,
     List<string> ScheduleDays,

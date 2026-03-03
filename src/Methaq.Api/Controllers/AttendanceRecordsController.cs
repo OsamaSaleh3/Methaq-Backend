@@ -27,7 +27,7 @@ public class AttendanceRecordsController : BaseController
         var command = new RecordAttendanceCommand(
             lectureId,
             request.StudentId,
-            Enum.Parse<AttendanceStatus>(request.Status),
+            (AttendanceStatus)(request.Status),
             request.ExcuseReason,
             request.Notes);
 
@@ -41,7 +41,7 @@ public class AttendanceRecordsController : BaseController
     {
         var command = new UpdateAttendanceCommand(
             attendanceRecordId,
-            Enum.Parse<AttendanceStatus>(request.Status),
+            (AttendanceStatus)(request.Status),
             request.ExcuseReason,
             request.Notes);
 

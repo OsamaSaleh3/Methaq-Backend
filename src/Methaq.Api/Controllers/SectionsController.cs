@@ -27,7 +27,7 @@ public class SectionsController : BaseController
     {
         var command = new CreateSectionCommand(
             request.Name,
-            Enum.Parse<AcademicLevel>(request.AcademicLevel),
+            (AcademicLevel)(request.AcademicLevel),
             request.CenterId,
             request.SupervisorId,
             request.ScheduleDays.Select(d => Enum.Parse<DayOfWeek>(d)).ToList(),

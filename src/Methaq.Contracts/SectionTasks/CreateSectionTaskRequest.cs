@@ -7,7 +7,7 @@ public record CreateSectionTaskRequest(
     Guid LectureId,
     Guid AssignedById,
     decimal FullMark,
-    string Types,
+    int Types,
     Guid? StudentId,
     QuranRangeRequest? Range
 );

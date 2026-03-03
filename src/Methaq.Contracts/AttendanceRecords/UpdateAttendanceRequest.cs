@@ -2,7 +2,7 @@
 namespace Methaq.Contracts.AttendanceRecords;
 
 public record UpdateAttendanceRequest(
-    string Status,
+    int Status,
     string? ExcuseReason,
     string? Notes
 );

@@ -32,7 +32,7 @@ public class SectionTasksController : BaseController
         request.LectureId,
         request.AssignedById,
         request.FullMark,
-        Enum.Parse<TaskTypes>(request.Types),
+        (TaskTypes)(request.Types),
         request.StudentId,
         request.Range is null ? null : new QuranRange(
         request.Range.Volume,
