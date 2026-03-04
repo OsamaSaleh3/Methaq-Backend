@@ -40,6 +40,7 @@ namespace Methaq.Infrastructure.Repositories
         {
             return _context.Lectures
                 .Include(l => l.Section)
+                    .ThenInclude(s=>s.Students)
                 .FirstOrDefaultAsync(l => l.Id == id);
         }
 
