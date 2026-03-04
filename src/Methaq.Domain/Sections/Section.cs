@@ -66,7 +66,7 @@ public class Section : BaseEntity
         if (Status == SectionStatus.Closed)
             return SectionErrors.SectionClosed;
 
-        if (_students.Any(s => s.UserId == student.UserId))
+        if (_students.Any(s => s.Id == student.Id))
             return SectionErrors.StudentExists;
 
         _students.Add(student);

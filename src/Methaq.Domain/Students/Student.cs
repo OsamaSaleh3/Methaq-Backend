@@ -76,6 +76,9 @@ public class Student : BaseEntity
         if (sectionId == Guid.Empty)
             return StudentErrors.InvalidSectionId;
 
+        if(this.SectionId != null)
+            return StudentErrors.AlreadyInSection;
+
         SectionId = sectionId;
         MarkAsUpdated();
         return Result.Success;
