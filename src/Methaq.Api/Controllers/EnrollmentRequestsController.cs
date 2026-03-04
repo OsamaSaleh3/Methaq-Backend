@@ -22,7 +22,11 @@ public class EnrollmentRequestsController : BaseController
     [HttpPost]
     public async Task<IActionResult> SubmitEnrollmentRequest([FromBody] SubmitEnrollmentRequestRequest request)
     {
-        var studentId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var studentIdClaim = User.FindFirstValue("StudentId");
+        if (studentIdClaim is null)
+            return Forbid();
+
+        var studentId = Guid.Parse(studentIdClaim);
 
         var command = new SubmitEnrollmentRequestCommand(studentId, request.CenterId);
         var result = await _mediator.Send(command);

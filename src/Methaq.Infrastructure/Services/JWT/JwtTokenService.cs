@@ -30,6 +30,12 @@ public class JwtTokenService : IJwtTokenService
             new(ClaimTypes.Role, role)
         };
 
+        if (user.Student is not null)
+            claims.Add(new Claim("StudentId", user.Student.Id.ToString()));
+
+        if (user.Employee is not null)
+            claims.Add(new Claim("EmployeeId", user.Employee.Id.ToString()));
+
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_settings.SecretKey));
 
