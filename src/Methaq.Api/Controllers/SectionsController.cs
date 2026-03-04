@@ -30,7 +30,7 @@ public class SectionsController : BaseController
             (AcademicLevel)(request.AcademicLevel),
             request.CenterId,
             request.SupervisorId,
-            request.ScheduleDays.Select(d => Enum.Parse<DayOfWeek>(d)).ToList(),
+            request.ScheduleDays,
             TimeOnly.Parse(request.StartTime),
             TimeOnly.Parse(request.EndTime));
 
