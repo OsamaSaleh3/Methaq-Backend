@@ -20,7 +20,7 @@ public class Employee : BaseEntity
     public EmploymentStatus EmploymentStatus { get; private set; }
 
     public EmployeeRole Role { get; private set; }
-    public Guid? CenterId { get; private set; }      // المركز اللي هو فيه
+    public Guid? CenterId { get; private set; }     
     public QuranCenter? Center { get; private set; }
 
     private readonly List<Section> _supervisedSections = [];
