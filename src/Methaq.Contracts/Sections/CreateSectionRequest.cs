@@ -4,7 +4,7 @@ public record CreateSectionRequest(
     int AcademicLevel,
     Guid CenterId,
     Guid SupervisorId,
-    List<string> ScheduleDays,
+    List<DayOfWeek> ScheduleDays,
     string StartTime,
     string EndTime
 );
