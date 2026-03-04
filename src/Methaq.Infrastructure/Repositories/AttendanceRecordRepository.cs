@@ -32,6 +32,8 @@ namespace Methaq.Infrastructure.Repositories
         public Task<List<AttendanceRecord>> GetByLectureIdAsync(Guid lectureId)
         {
             return _context.AttendanceRecords
+                .Include(a=>a.Student)
+                    .ThenInclude(s=>s.User)
                 .Where(ar => ar.LectureId == lectureId)
                 .ToListAsync();
         }
