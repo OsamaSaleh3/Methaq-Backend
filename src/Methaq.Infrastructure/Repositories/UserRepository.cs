@@ -23,7 +23,10 @@ public class UserRepository : IUserRepository
 
     public async Task<ApplicationUser?> GetByEmailAsync(string email)
     {
-        return await _userManager.FindByEmailAsync(email);
+        return await _context.Users
+       .Include(u => u.Student)
+       .Include(u => u.Employee)
+       .FirstOrDefaultAsync(u => u.Email == email);
     }
 
     public async Task<ApplicationUser?> GetByIdAsync(string id)
