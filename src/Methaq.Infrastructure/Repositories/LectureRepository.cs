@@ -47,6 +47,8 @@ namespace Methaq.Infrastructure.Repositories
         public async Task<List<Lecture>> GetBySectionIdAsync(Guid sectionId)
         {
             return await _context.Lectures
+                .Include(l=>l.AttendanceRecords)
+                .Include(l => l.SectionTasks)
                 .Where(l => l.SectionId == sectionId)
                 .ToListAsync();
         }
