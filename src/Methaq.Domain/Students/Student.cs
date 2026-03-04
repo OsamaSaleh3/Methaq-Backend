@@ -1,8 +1,9 @@
 ﻿using ErrorOr;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.Common;
-using Methaq.Domain.SectionTasks;
+using Methaq.Domain.QuranCenters;
 using Methaq.Domain.Sections;
+using Methaq.Domain.SectionTasks;
 
 namespace Methaq.Domain.Students;
 
@@ -13,13 +14,12 @@ public class Student : BaseEntity
     public string GuardianName { get; private set; } = null!;
     public string GuardianPhone { get; private set; } = null!;
     public string? GuardianEmail { get; private set; }
-
     public string AcademicLevel { get; private set; } = null!;
-
+    public Guid? CenterId { get; private set; }
+    public QuranCenter? Center { get; private set; }
     public Guid? SectionId { get; private set; }
     public Section? Section { get; private set; }
 
-   
     protected Student() { }
 
     private Student(string userId, string guardianName, string guardianPhone, string? guardianEmail, string academicLevel)
@@ -46,6 +46,31 @@ public class Student : BaseEntity
         return new Student(userId, guardianName, guardianPhone, guardianEmail, academicLevel);
     }
 
+    public ErrorOr<Success> AssignToCenter(Guid centerId)
+    {
+        if (centerId == Guid.Empty)
+            return StudentErrors.InvalidCenterId;
+
+        if (CenterId != null)
+            return StudentErrors.AlreadyInCenter;
+
+        CenterId = centerId;
+        MarkAsUpdated();
+        return Result.Success;
+    }
+
+    public ErrorOr<Success> RemoveFromCenter()
+    {
+        if (CenterId == null)
+            return StudentErrors.NotAssignedToCenter;
+
+        CenterId = null;
+        Center = null;
+        SectionId = null;
+        Section = null;
+        MarkAsUpdated();
+        return Result.Success;
+    }
     public ErrorOr<Success> AssignToSection(Guid sectionId)
     {
         if (sectionId == Guid.Empty)

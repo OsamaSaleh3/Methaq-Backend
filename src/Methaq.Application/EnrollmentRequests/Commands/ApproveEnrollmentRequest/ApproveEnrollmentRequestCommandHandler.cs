@@ -31,6 +31,10 @@ public class ApproveEnrollmentRequestCommandHandler : IRequestHandler<ApproveEnr
         if(result.IsError)
             return result.Errors;
 
+        var assignResult = requestResult.Student.AssignToCenter(requestResult.CenterId);
+        if (assignResult.IsError)
+            return assignResult.Errors;
+
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         await _emailService.SendEmailAsync(
