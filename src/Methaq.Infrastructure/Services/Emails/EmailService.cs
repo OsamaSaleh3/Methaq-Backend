@@ -1,4 +1,5 @@
 ﻿using MailKit.Net.Smtp;
+using MailKit.Security;
 using Methaq.Application.Common.Interfaces;
 using Microsoft.Extensions.Options;
 using MimeKit;
@@ -24,7 +25,9 @@ public class EmailService : IEmailService
         };
 
         using var client = new SmtpClient();
-        await client.ConnectAsync(_setting.Host,_setting.Port,true);
+
+        await client.ConnectAsync(_setting.Host, _setting.Port, SecureSocketOptions.StartTls);
+
         await client.AuthenticateAsync(_setting.Username, _setting.Password);
         await client.SendAsync(message);
         await client.DisconnectAsync(true);
