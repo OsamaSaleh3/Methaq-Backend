@@ -43,6 +43,8 @@ public class CreateCenterCommandHandler : IRequestHandler<CreateCenterCommand, E
 
         var center = centerResult.Value;
 
+        center.AddSupervisor(manager);
+
         await _quranCenterRepository.AddAsync(center, cancellationToken);
         await _unitOfWork.SaveChangesAsync();
 
