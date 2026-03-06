@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Methaq.Application.Common.Emails
 {
-    
+
     public static class EmailTemplates
     {
 
@@ -28,7 +28,7 @@ namespace Methaq.Application.Common.Emails
                     <td align="center" style="padding: 40px 0;">
                         <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                             <tr>
-                                <td style="background-color: #1a7a4a; padding: 30px; text-align: center;">
+                                <td style="background-color: #3B666B; padding: 30px; text-align: center;">
                                     <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Methaq</h1>
                                     <p style="color: #a8d5b5; margin: 5px 0 0;">Quran Memorization System</p>
                                 </td>
@@ -40,9 +40,9 @@ namespace Methaq.Application.Common.Emails
                                     <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
                                         <tr>
                                             <td align="center">
-                                                <div style="background-color: #f0f7f4; border: 2px dashed #1a7a4a; border-radius: 8px; padding: 20px 40px; display: inline-block;">
+                                                <div style="background-color: #f0f7f4; border: 2px dashed #3B666B; border-radius: 8px; padding: 20px 40px; display: inline-block;">
                                                     <p style="color: #666666; margin: 0 0 8px; font-size: 14px;">Your verification code</p>
-                                                    <p style="color: #1a7a4a; font-size: 36px; font-weight: bold; margin: 0; letter-spacing: 8px;">{otp}</p>
+                                                    <p style="color: #3B666B; font-size: 36px; font-weight: bold; margin: 0; letter-spacing: 8px;">{otp}</p>
                                                 </div>
                                             </td>
                                         </tr>
@@ -77,7 +77,7 @@ namespace Methaq.Application.Common.Emails
                     <td align="center" style="padding: 40px 0;">
                         <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                             <tr>
-                                <td style="background-color: #1a7a4a; padding: 30px; text-align: center;">
+                                <td style="background-color: #3B666B; padding: 30px; text-align: center;">
                                     <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Methaq</h1>
                                     <p style="color: #a8d5b5; margin: 5px 0 0;">Quran Memorization System</p>
                                 </td>
@@ -85,8 +85,8 @@ namespace Methaq.Application.Common.Emails
                             <tr>
                                 <td style="padding: 40px 30px;">
                                     <h2 style="color: #333333; margin: 0 0 10px;">Hello, {fullName}</h2>
-                                    <div style="background-color: #f0f7f4; border-left: 4px solid #1a7a4a; padding: 15px 20px; margin: 20px 0; border-radius: 4px;">
-                                        <p style="color: #1a7a4a; font-weight: bold; margin: 0;">✓ Your account has been approved!</p>
+                                    <div style="background-color: #f0f7f4; border-left: 4px solid #3B666B; padding: 15px 20px; margin: 20px 0; border-radius: 4px;">
+                                        <p style="color: #3B666B; font-weight: bold; margin: 0;">✓ Your account has been approved!</p>
                                     </div>
                                     <p style="color: #666666; line-height: 1.6;">You can now log in to Methaq and start using the system.</p>
                                 </td>
@@ -104,7 +104,7 @@ namespace Methaq.Application.Common.Emails
         </body>
         </html>
         """;
-        
+
 
         public static string AccountRejected(string fullName, string? reason) => $"""
         <!DOCTYPE html>
@@ -119,7 +119,7 @@ namespace Methaq.Application.Common.Emails
                     <td align="center" style="padding: 40px 0;">
                         <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                             <tr>
-                                <td style="background-color: #1a7a4a; padding: 30px; text-align: center;">
+                                <td style="background-color: #3B666B; padding: 30px; text-align: center;">
                                     <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Methaq</h1>
                                     <p style="color: #a8d5b5; margin: 5px 0 0;">Quran Memorization System</p>
                                 </td>
@@ -161,15 +161,15 @@ namespace Methaq.Application.Common.Emails
                 <td align="center" style="padding: 40px 0;">
                     <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
                         <tr>
-                            <td style="background-color: #1a7a4a; padding: 30px; text-align: center;">
+                            <td style="background-color: #3B666B; padding: 30px; text-align: center;">
                                 <h1 style="color: #ffffff; margin: 0;">Methaq</h1>
                             </td>
                         </tr>
                         <tr>
                             <td style="padding: 40px 30px;">
                                 <h2 style="color: #333333;">Hello, {fullName}</h2>
-                                <div style="background-color: #f0f7f4; border-left: 4px solid #1a7a4a; padding: 15px 20px; margin: 20px 0;">
-                                    <p style="color: #1a7a4a; font-weight: bold; margin: 0;">✓ Your enrollment request has been approved!</p>
+                                <div style="background-color: #f0f7f4; border-left: 4px solid #3B666B; padding: 15px 20px; margin: 20px 0;">
+                                    <p style="color: #3B666B; font-weight: bold; margin: 0;">✓ Your enrollment request has been approved!</p>
                                 </div>
                                 <p style="color: #666666;">You have been successfully enrolled in <strong>{centerName}</strong>.</p>
                             </td>
@@ -196,7 +196,7 @@ namespace Methaq.Application.Common.Emails
                 <td align="center" style="padding: 40px 0;">
                     <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden;">
                         <tr>
-                            <td style="background-color: #1a7a4a; padding: 30px; text-align: center;">
+                            <td style="background-color: #3B666B; padding: 30px; text-align: center;">
                                 <h1 style="color: #ffffff; margin: 0;">Methaq</h1>
                             </td>
                         </tr>
@@ -235,7 +235,7 @@ namespace Methaq.Application.Common.Emails
             <td align="center" style="padding: 40px 0;">
                 <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
                     <tr>
-                        <td style="background-color: #1a7a4a; padding: 30px; text-align: center;">
+                        <td style="background-color: #3B666B; padding: 30px; text-align: center;">
                             <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Methaq</h1>
                             <p style="color: #a8d5b5; margin: 5px 0 0;">Quran Memorization System</p>
                         </td>
@@ -243,8 +243,8 @@ namespace Methaq.Application.Common.Emails
                     <tr>
                         <td style="padding: 40px 30px;">
                             <h2 style="color: #333333; margin: 0 0 10px;">Hello, {fullName}</h2>
-                            <div style="background-color: #f0f7f4; border-left: 4px solid #1a7a4a; padding: 15px 20px; margin: 20px 0; border-radius: 4px;">
-                                <p style="color: #1a7a4a; font-weight: bold; margin: 0;">✓ Your final report is now available.</p>
+                            <div style="background-color: #f0f7f4; border-left: 4px solid #3B666B; padding: 15px 20px; margin: 20px 0; border-radius: 4px;">
+                                <p style="color: #3B666B; font-weight: bold; margin: 0;">✓ Your final report is now available.</p>
                             </div>
                             <table width="100%" cellpadding="10" cellspacing="0" style="border-collapse: collapse; margin: 20px 0;">
                                 <tr style="background-color: #f0f7f4;">
@@ -263,7 +263,7 @@ namespace Methaq.Application.Common.Emails
                                     <td style="border: 1px solid #dddddd; color: #333333;"><strong>Behavior Score</strong></td>
                                     <td style="border: 1px solid #dddddd; color: #333333;">{behaviorScore:F1} / 100</td>
                                 </tr>
-                                <tr style="background-color: #1a7a4a;">
+                                <tr style="background-color: #3B666B;">
                                     <td style="border: 1px solid #dddddd; color: #ffffff;"><strong>Total Score</strong></td>
                                     <td style="border: 1px solid #dddddd; color: #ffffff;"><strong>{totalScore:F1} / 100</strong></td>
                                 </tr>
