@@ -23,7 +23,10 @@ namespace Methaq.Infrastructure.Repositories
 
         public async Task<List<Section>> GetByCenterIdAsync(Guid centerId)
         {
-            return await _context.Sections.Where(s => s.CenterId == centerId).ToListAsync();
+            return await _context.Sections
+                .Include(c=>c.Supervisor)
+                    .ThenInclude(s=>s.User)
+                .Where(s => s.CenterId == centerId).ToListAsync();
         }
 
         public async Task<Section?> GetByIdAsync(Guid id)
@@ -35,6 +38,7 @@ namespace Methaq.Infrastructure.Repositories
         {
             return await _context.Sections
                 .Include(s => s.Supervisor)
+                    .ThenInclude(s => s.User)
                 .Include(s => s.Center)
                 .Include(s => s.Students)
                 .Include(s => s.Lectures)
@@ -45,6 +49,7 @@ namespace Methaq.Infrastructure.Repositories
         {
             return await _context.Sections
                 .Include(s => s.Students)
+                    .ThenInclude (s => s.User)
                 .FirstOrDefaultAsync(s => s.Id == id);
         }
     }
