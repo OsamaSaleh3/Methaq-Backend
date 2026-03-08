@@ -1,13 +1,13 @@
 ﻿using Methaq.Domain.GroupChats;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Methaq.Application.Common.Interfaces
+namespace Methaq.Application.Common.Interfaces;
+
+public interface IGroupChatRepository
 {
-    public interface IGroupChatRepository
-    {
-        Task<GroupChat?> GetBySectionIdAsync(Guid sectionId);
-        Task AddAsync(GroupChat groupChat, CancellationToken cancellationToken);
-    }
+    Task<GroupChat?> GetByIdAsync(Guid id);
+    Task<GroupChat?> GetByIdWithMembersAsync(Guid id);
+    Task<GroupChat?> GetBySectionIdAsync(Guid sectionId);
+    Task<GroupMessage?> GetMessageByIdAsync(Guid messageId);
+    Task<List<GroupMessage>> GetMessagesByGroupChatIdAsync(Guid groupChatId);
+    Task AddAsync(GroupChat groupChat);
 }

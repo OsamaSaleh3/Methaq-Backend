@@ -1,5 +1,6 @@
 ﻿using ErrorOr;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Methaq.Api.Controllers;
 
@@ -7,6 +8,8 @@ namespace Methaq.Api.Controllers;
 [Route("api/[controller]")]
 public class BaseController : ControllerBase
 {
+    protected string UserId => User.FindFirstValue(ClaimTypes.NameIdentifier)!;
+
     protected IActionResult HandleResult<T>(ErrorOr<T> result)
     {
         return result.Match<IActionResult>(

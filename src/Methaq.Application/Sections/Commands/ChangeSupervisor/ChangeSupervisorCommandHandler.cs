@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Interfaces;
+using Methaq.Domain.Students;
 using System.ComponentModel.DataAnnotations;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
@@ -38,13 +39,23 @@ public class ChangeSupervisorCommandHandler : IRequestHandler<ChangeSupervisorCo
             return ChangeSupervisorErrors.SupervisorNotInCenter;
 
         var chat = await _groupChatRepository.GetBySectionIdAsync(request.SectionId);
-        chat?.RemoveMember(section.Supervisor.User.Id);
+        if (chat is not null)
+        {
+            var removeMemberResult = chat.RemoveMember(section.Supervisor.User.Id);
+            if (removeMemberResult.IsError)
+                return removeMemberResult.Errors;
+        }
 
         var result = section.ChangeSupervisor(request.NewSupervisorId);
         if (result.IsError)
             return result.Errors;
-        
-        chat?.AddMember(newSupervisor.User);
+
+        if (chat is not null)
+        {
+            var addMemberResult = chat.AddMember(newSupervisor.User);
+            if (addMemberResult.IsError)
+                return addMemberResult.Errors;
+        }
 
         await _unitOfWork.SaveChangesAsync();
         return Result.Success;

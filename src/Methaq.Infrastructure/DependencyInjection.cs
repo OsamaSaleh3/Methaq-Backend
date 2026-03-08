@@ -3,6 +3,7 @@ using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.AttendanceRecords;
 using Methaq.Infrastructure.Common;
 using Methaq.Infrastructure.Common.Persistence;
+using Methaq.Infrastructure.Hubs;
 using Methaq.Infrastructure.Repositories;
 using Methaq.Infrastructure.Services.Emails;
 using Methaq.Infrastructure.Services.JWT;
@@ -65,6 +66,7 @@ public static class DependencyInjection
             };
         });
 
+        services.AddSignalR();
 
 
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
@@ -88,6 +90,7 @@ public static class DependencyInjection
         services.AddScoped<IAttendanceRecordRepository, AttendanceRecordRepository>();
         services.AddScoped<ISectionTaskRepository, SectionTaskRepository>();
         services.AddScoped<IFinalReportRepository, FinalReportRepository>();
+        services.AddScoped<IChatSender, ChatSender>();
 
         return services;
     }

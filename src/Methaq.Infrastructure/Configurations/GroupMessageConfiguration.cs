@@ -33,5 +33,7 @@ public class GroupMessageConfiguration : IEntityTypeConfiguration<GroupMessage>
             .WithMany()
             .HasForeignKey(m => m.SenderId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Property(m => m.Id).ValueGeneratedNever();
     }
 }

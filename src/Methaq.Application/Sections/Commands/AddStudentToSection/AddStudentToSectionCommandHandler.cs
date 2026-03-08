@@ -1,7 +1,6 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Interfaces;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Methaq.Application.Sections.Commands.AddStudentToSection;
 
@@ -41,7 +40,12 @@ public class AddStudentToSectionCommandHandler : IRequestHandler<AddStudentToSec
             return result.Errors;
 
         var chat = await _groupChatRepository.GetBySectionIdAsync(request.SectionId);
-        chat?.AddMember(student.User);
+        if (chat is not null)
+        {
+            var addMemberResult = chat.AddMember(student.User);
+            if (addMemberResult.IsError)
+                return addMemberResult.Errors;
+        }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

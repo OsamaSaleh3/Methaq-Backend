@@ -58,7 +58,7 @@ public class CreateSectionCommandHandler : IRequestHandler<CreateSectionCommand,
         var section= sectionResult.Value;
 
         var ChatResult = GroupChat.Create(
-            section.Name,
+            section.Name+" Chat",
              section.Id
             );
         if (ChatResult.IsError)
@@ -67,14 +67,16 @@ public class CreateSectionCommandHandler : IRequestHandler<CreateSectionCommand,
         var chat=ChatResult.Value;
 
         var supervisorUser = supervisor.User;
-        chat.AddMember(supervisorUser);
+        var addSupervisorResult = chat.AddMember(supervisorUser);
+        if (addSupervisorResult.IsError)
+            return addSupervisorResult.Errors;
 
         await _unitOfWork.BeginTransactionAsync();
 
         try
         {
             await _sectionRepository.AddAsync(section,cancellationToken);
-            await _groupChatRepository.AddAsync(chat, cancellationToken);
+            await _groupChatRepository.AddAsync(chat);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             await _unitOfWork.CommitTransactionAsync();
         }

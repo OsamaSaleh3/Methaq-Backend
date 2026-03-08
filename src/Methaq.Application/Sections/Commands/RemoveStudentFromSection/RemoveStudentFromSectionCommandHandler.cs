@@ -35,7 +35,12 @@ public class RemoveStudentFromSectionCommandHandler : IRequestHandler<RemoveStud
             return result.Errors;
 
         var chat = await _groupChatRepository.GetBySectionIdAsync(request.SectionId);
-        chat?.RemoveMember(student.UserId);
+        if (chat is not null)
+        {
+            var removeMemberResult = chat.RemoveMember(student.User.Id);
+            if (removeMemberResult.IsError)
+                return removeMemberResult.Errors;
+        }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 

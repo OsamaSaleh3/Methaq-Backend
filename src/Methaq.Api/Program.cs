@@ -1,25 +1,24 @@
 using Methaq.Application;
 using Methaq.Infrastructure;
 using Methaq.Infrastructure.Common.Persistence;
+using Methaq.Infrastructure.Hubs;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddProblemDetails();
-
 builder.Services.AddOpenApi();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-
 builder.Services.AddSwaggerGen(options =>
 {
-
     options.AddSecurityDefinition("bearer", new OpenApiSecurityScheme
     {
         Type = SecuritySchemeType.Http,
@@ -34,30 +33,32 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.WithOrigins("http://127.0.0.1:5500", "http://localhost:5500", "https://localhost:7098")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
+app.UseCors("AllowAll");
+
 await DbInitializer.InitializeAsync(app.Services);
 
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-
-
-using var scope = app.Services.CreateScope();
-var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>(); 
-dbContext.Database.Migrate();
+app.MapHub<ChatHub>("/hubs/chat");
 
 app.Run();
-
-
