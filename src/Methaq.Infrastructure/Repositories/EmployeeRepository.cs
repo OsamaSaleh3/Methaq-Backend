@@ -1,7 +1,9 @@
 ﻿using Methaq.Application.Common.Interfaces;
+using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.Employees;
 using Methaq.Domain.Employees.enums;
 using Methaq.Infrastructure.Common.Persistence;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -41,5 +43,7 @@ namespace Methaq.Infrastructure.Repositories
             .Include(s => s.User)
             .FirstOrDefaultAsync(s => s.Id == id);
         }
+
+   
     }
 }
