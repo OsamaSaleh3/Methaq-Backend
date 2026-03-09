@@ -44,6 +44,13 @@ namespace Methaq.Infrastructure.Repositories
             .FirstOrDefaultAsync(s => s.Id == id);
         }
 
-   
+        public async Task<List<Employee>> GetAllWithUserAsync()
+        {
+            return await _context.Employees
+                .Include(e => e.User)
+                .ToListAsync();
+        }
+
+
     }
 }

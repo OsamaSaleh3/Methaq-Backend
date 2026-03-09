@@ -2,6 +2,8 @@
 using Methaq.Application.Employees.Commands.Reactivate;
 using Methaq.Application.Employees.Commands.Resign;
 using Methaq.Application.Employees.Commands.UpdateQualifications;
+using Methaq.Application.Employees.Queries.GetAllEmployees;
+using Methaq.Application.Employees.Queries.GetEmployee;
 using Methaq.Contracts.Employees;
 using Methaq.Domain.Employees.enums;
 using Microsoft.AspNetCore.Authorization;
@@ -45,6 +47,22 @@ public class EmployeeController : BaseController
     {
         var command = new ReactivateCommand(supervisorId);
         var result = await _mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    [HttpGet("{employeeId}")]
+    public async Task<IActionResult> GetEmployee(Guid employeeId)
+    {
+        var query = new GetEmployeeQuery(employeeId);
+        var result = await _mediator.Send(query);
+        return HandleResult(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllEmployees()
+    {
+        var query = new GetAllEmployeesQuery();
+        var result = await _mediator.Send(query);
         return HandleResult(result);
     }
 }
