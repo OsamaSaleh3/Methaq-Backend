@@ -1,10 +1,11 @@
 ﻿using Methaq.Application.Common.Interfaces;
+using Methaq.Infrastructure.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Methaq.Infrastructure.Hubs
+namespace Methaq.Infrastructure.Services.Chat
 {
     public class ChatSender : IChatSender
     {

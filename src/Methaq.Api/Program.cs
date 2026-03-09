@@ -2,6 +2,7 @@ using Methaq.Application;
 using Methaq.Infrastructure;
 using Methaq.Infrastructure.Common.Persistence;
 using Methaq.Infrastructure.Hubs;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
@@ -44,6 +45,7 @@ builder.Services.AddCors(options =>
     });
 });
 
+
 var app = builder.Build();
 
 app.UseCors("AllowAll");
@@ -60,5 +62,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapHub<ChatHub>("/hubs/chat");
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 app.Run();

@@ -3,8 +3,9 @@ using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.AttendanceRecords;
 using Methaq.Infrastructure.Common;
 using Methaq.Infrastructure.Common.Persistence;
-using Methaq.Infrastructure.Hubs;
 using Methaq.Infrastructure.Repositories;
+using Methaq.Infrastructure.Services;
+using Methaq.Infrastructure.Services.Chat;
 using Methaq.Infrastructure.Services.Emails;
 using Methaq.Infrastructure.Services.JWT;
 using Methaq.Infrastructure.Services.OTP;
@@ -64,6 +65,21 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"]!))
             };
+
+            options.Events = new JwtBearerEvents
+            {
+                OnMessageReceived = context =>
+                {
+                    var accessToken = context.Request.Query["access_token"];
+                    var path = context.HttpContext.Request.Path;
+
+                    if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+                    {
+                        context.Token = accessToken;
+                    }
+                    return Task.CompletedTask;
+                }
+            };
         });
 
         services.AddSignalR();
@@ -91,6 +107,9 @@ public static class DependencyInjection
         services.AddScoped<ISectionTaskRepository, SectionTaskRepository>();
         services.AddScoped<IFinalReportRepository, FinalReportRepository>();
         services.AddScoped<IChatSender, ChatSender>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
+        services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<INotificationSender, NotificationSender>();
 
         return services;
     }

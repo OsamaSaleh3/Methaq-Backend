@@ -2,13 +2,9 @@
 {
     public enum NotificationType
     {
-        SessionReminder,     
-        TimeWarning,         
-        Administrative,      
+        LectureReminder,     
         EnrollmentApproved,  
         EnrollmentRejected,  
-        AccountApproved,     
-        AccountRejected,     
         SectionClosed,       
         FinalReportReady     
     }
