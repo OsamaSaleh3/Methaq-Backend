@@ -4,6 +4,7 @@ using Methaq.Application.Employees.Commands.Resign;
 using Methaq.Application.Employees.Commands.UpdateQualifications;
 using Methaq.Application.Employees.Queries.GetAllEmployees;
 using Methaq.Application.Employees.Queries.GetEmployee;
+using Methaq.Application.UseCases.Employees.Queries.GetEmployeesByCenter;
 using Methaq.Contracts.Employees;
 using Methaq.Domain.Employees.enums;
 using Microsoft.AspNetCore.Authorization;
@@ -62,6 +63,14 @@ public class EmployeeController : BaseController
     public async Task<IActionResult> GetAllEmployees()
     {
         var query = new GetAllEmployeesQuery();
+        var result = await _mediator.Send(query);
+        return HandleResult(result);
+    }
+
+    [HttpGet("center/{centerId:guid}")]
+    public async Task<IActionResult> GetEmployeesByCenter(Guid centerId)
+    {
+        var query = new GetEmployeesByCenterQuery(centerId);
         var result = await _mediator.Send(query);
         return HandleResult(result);
     }

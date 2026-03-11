@@ -1,3 +1,4 @@
+using MediatR;
 using Methaq.Application.QuranCenters.Commands.AddSupervisor;
 using Methaq.Application.QuranCenters.Commands.CloseCenter;
 using Methaq.Application.QuranCenters.Commands.CreateCenter;
@@ -8,8 +9,8 @@ using Methaq.Application.QuranCenters.Queries.GetAllCenters;
 using Methaq.Application.QuranCenters.Queries.GetCenterById;
 using Methaq.Application.QuranCenters.Queries.GetCenterSections;
 using Methaq.Application.QuranCenters.Queries.GetCenterSupervisors;
+using Methaq.Application.UseCases.QuranCenters.Queries.GetMyCenterInfo;
 using Methaq.Contracts.QuranCenters;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,7 +26,7 @@ public class QuranCentersController : BaseController
         _mediator = mediator;
     }
 
-    [Authorize(Roles = "SuperAdmin")]
+    [Authorize(Roles = "SuperAdmin,CenterManager")]
     [HttpPost]
     public async Task<IActionResult> CreateCenter([FromBody] CreateCenterRequest request)
     {
@@ -119,6 +120,14 @@ public class QuranCentersController : BaseController
     public async Task<IActionResult> GetCenterSections(Guid centerId)
     {
         var query = new GetCenterSectionsQuery(centerId);
+        var result = await _mediator.Send(query);
+        return HandleResult(result);
+    }
+
+    [HttpGet("my-center")]
+    public async Task<IActionResult> GetMyCenterInfo()
+    {
+        var query = new GetMyCenterInfoQuery(UserId);
         var result = await _mediator.Send(query);
         return HandleResult(result);
     }

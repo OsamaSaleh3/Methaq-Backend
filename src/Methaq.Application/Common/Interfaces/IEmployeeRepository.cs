@@ -13,6 +13,8 @@ namespace Methaq.Application.Common.Interfaces
         Task<List<Employee>> GetAvailableSupervisorsAsync();
         Task<Employee?> GetByIdWithUserAsync(Guid id);
         Task<List<Employee>> GetAllWithUserAsync();
+        Task<List<Employee>> GetByCenterAsync(Guid centerId, CancellationToken cancellationToken);
+        Task<Employee?> GetByUserIdAsync(string userId);
 
     }
 }

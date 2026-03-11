@@ -51,6 +51,19 @@ namespace Methaq.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<List<Employee>> GetByCenterAsync(Guid centerId, CancellationToken cancellationToken)
+        {
+            return await _context.Employees
+                .Include(e => e.User)
+                .Where(e => e.CenterId == centerId)
+                .ToListAsync(cancellationToken);
+        }
 
+        public Task<Employee?> GetByUserIdAsync(string userId)
+        {
+            return _context.Employees
+                .Include(e => e.User)
+                .FirstOrDefaultAsync(e => e.UserId == userId);
+        }
     }
 }
