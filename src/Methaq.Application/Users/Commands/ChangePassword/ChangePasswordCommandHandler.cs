@@ -12,10 +12,11 @@ namespace Methaq.Application.Users.Commands.ChangePassword
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, ErrorOr<Success>>
     {
         private readonly IUserRepository _userRepository;
-
-        public ChangePasswordCommandHandler(IUserRepository userRepository)
+        private readonly IUnitOfWork _unitOfWork;
+        public ChangePasswordCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ErrorOr<Success>> Handle(ChangePasswordCommand request, CancellationToken cancellationToken)
@@ -27,6 +28,8 @@ namespace Methaq.Application.Users.Commands.ChangePassword
             var result = await _userRepository.ChangePasswordAsync(user, request.CurrentPassword, request.NewPassword);
             if (!result.Succeeded)
                 return ChangePasswordErrors.InvalidCurrentPassword;
+
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Success;
         }

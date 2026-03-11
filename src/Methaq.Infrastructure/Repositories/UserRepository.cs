@@ -106,8 +106,10 @@ public class UserRepository : IUserRepository
             .FirstOrDefaultAsync(u => u.Id == userId);
     }
 
-    public Task<bool> ChangePasswordAsync(ApplicationUser user, string currentPassword, string newPassword)
+    public Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string currentPassword, string newPassword)
     {
-        throw new NotImplementedException();
+        return _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
     }
+
+ 
 }

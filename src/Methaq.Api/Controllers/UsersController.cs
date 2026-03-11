@@ -1,4 +1,6 @@
 ﻿using MediatR;
+using Methaq.Application.Users.Commands.ChangePassword;
+using Methaq.Application.Users.Commands.UpdateProfile;
 using Methaq.Application.Users.Queries.GetMyProfile;
 using Methaq.Contracts.Users;
 using Microsoft.AspNetCore.Authorization;
