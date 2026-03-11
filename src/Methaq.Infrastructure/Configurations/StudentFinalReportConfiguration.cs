@@ -10,6 +10,7 @@ public class StudentFinalReportConfiguration : IEntityTypeConfiguration<StudentF
     {
         builder.HasKey(r => new { r.StudentId, r.FinalReportId });
 
+
         builder.Property(r => r.MemorizationScore)
             .IsRequired()
             .HasColumnType("decimal(5,2)");
@@ -35,5 +36,10 @@ public class StudentFinalReportConfiguration : IEntityTypeConfiguration<StudentF
             .WithMany()
             .HasForeignKey(r => r.StudentId)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasOne(r => r.FinalReport)
+        .WithMany(f => f.StudentReports)
+        .HasForeignKey(r => r.FinalReportId)
+        .OnDelete(DeleteBehavior.Cascade);
     }
 }

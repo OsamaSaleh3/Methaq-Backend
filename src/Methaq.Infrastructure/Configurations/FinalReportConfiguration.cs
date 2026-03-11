@@ -29,10 +29,5 @@ public class FinalReportConfiguration : IEntityTypeConfiguration<FinalReport>
             .WithMany()
             .HasForeignKey(r => r.SectionId)
             .OnDelete(DeleteBehavior.Restrict);
-
-        builder.HasMany(r => r.StudentReports)
-            .WithOne()
-            .HasForeignKey(sr => sr.FinalReportId)
-            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,5 +1,6 @@
-namespace Methaq.Application.Students.Commands.RemoveStudentFromCenter;
+using ErrorOr;
+using MediatR;
 
-public class RemoveStudentFromCenterCommand
-{
-}
+namespace Methaq.Application.UseCases.Students.Commands.RemoveStudentFromCenter;
+
+public record RemoveStudentFromCenterCommand(Guid StudentId) : IRequest<ErrorOr<Success>>;

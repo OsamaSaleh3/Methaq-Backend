@@ -16,8 +16,6 @@ public class GroupMessage : BaseEntity
     public bool IsDeleted { get; private set; }
     public DateTime? EditedAt { get; private set; }
 
-    public bool IsNew { get; private set; }
-
     protected GroupMessage() { }
 
     private GroupMessage(Guid groupChatId, string senderId, string content, string? attachmentUrl)
@@ -27,7 +25,6 @@ public class GroupMessage : BaseEntity
         Content = content;
         AttachmentUrl = attachmentUrl;
         IsDeleted = false;
-        IsNew = false;
     }
 
     public static ErrorOr<GroupMessage> Create(Guid groupChatId, string senderId, string content, string? attachmentUrl = null)

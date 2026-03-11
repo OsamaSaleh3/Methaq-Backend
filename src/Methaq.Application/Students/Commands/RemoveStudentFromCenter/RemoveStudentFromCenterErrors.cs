@@ -1,5 +1,10 @@
-namespace Methaq.Application.Students.Commands.RemoveStudentFromCenter;
+using ErrorOr;
 
-public class RemoveStudentFromCenterErrors
+namespace Methaq.Application.UseCases.Students.Commands.RemoveStudentFromCenter;
+
+public static class RemoveStudentFromCenterErrors
 {
+    public static readonly Error StudentNotFound = Error.NotFound(
+        code: "RemoveStudentFromCenter.StudentNotFound",
+        description: "Student not found.");
 }

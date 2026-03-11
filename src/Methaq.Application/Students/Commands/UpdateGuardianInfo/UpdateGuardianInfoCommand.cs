@@ -1,5 +1,10 @@
-namespace Methaq.Application.Students.Commands.UpdateGuardianInfo;
+using ErrorOr;
+using MediatR;
 
-public class UpdateGuardianInfoCommand
-{
-}
+namespace Methaq.Application.UseCases.Students.Commands.UpdateGuardianInfo;
+
+public record UpdateGuardianInfoCommand(
+    string UserId,
+    string? GuardianName,
+    string? GuardianPhone,
+    string? GuardianEmail) : IRequest<ErrorOr<Success>>;
