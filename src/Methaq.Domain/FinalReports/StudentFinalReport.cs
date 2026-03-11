@@ -10,6 +10,7 @@ namespace Methaq.Domain.FinalReports
         public Guid StudentId { get; private set; }
         public Student Student { get; private set; } = null!;
         public Guid FinalReportId { get; private set; }
+        public FinalReport FinalReport { get; private set; } = null!;
 
         public decimal MemorizationScore { get; private set; }
         public decimal AttendanceScore { get; private set; }

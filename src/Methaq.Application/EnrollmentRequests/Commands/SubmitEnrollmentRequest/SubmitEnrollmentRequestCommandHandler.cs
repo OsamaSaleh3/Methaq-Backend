@@ -22,7 +22,7 @@ public class SubmitEnrollmentRequestCommandHandler : IRequestHandler<SubmitEnrol
 
     public async Task<ErrorOr<Guid>> Handle(SubmitEnrollmentRequestCommand command, CancellationToken cancellationToken)
     {
-        var student = await _studentRepository.GetByIdAsync(command.StudentId);
+        var student = await _studentRepository.GetByIdAsync(command.StudentId,cancellationToken);
         if (student is null)
             return SubmitEnrollmentRequestErrors.StudentNotFound;
 

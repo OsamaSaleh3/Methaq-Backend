@@ -27,7 +27,7 @@ public class AddStudentToSectionCommandHandler : IRequestHandler<AddStudentToSec
         if (section is null)
             return AddStudentToSectionErrors.SectionNotFound;
 
-        var student = await _studentRepository.GetByIdWithUserAsync(request.StudentId);
+        var student = await _studentRepository.GetByIdWithUserAsync(request.StudentId,cancellationToken);
         if (student is null)
             return AddStudentToSectionErrors.StudentNotFound;
 

@@ -26,7 +26,7 @@ public class RemoveStudentFromSectionCommandHandler : IRequestHandler<RemoveStud
         if (section is null)
             return RemoveStudentFromSectionErrors.SectionNotFound;
 
-        var student = await _studentRepository.GetByIdWithUserAsync(request.StudentId);
+        var student = await _studentRepository.GetByIdWithUserAsync(request.StudentId,cancellationToken);
         if (student is null)
             return RemoveStudentFromSectionErrors.StudentNotFound;
 

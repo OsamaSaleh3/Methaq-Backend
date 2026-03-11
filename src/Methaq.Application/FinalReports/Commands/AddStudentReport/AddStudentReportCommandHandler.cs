@@ -32,7 +32,7 @@ public class AddStudentReportCommandHandler : IRequestHandler<AddStudentReportCo
         if (report is null)
             return AddStudentReportErrors.ReportNotFound;
 
-        var student = await _studentRepository.GetByIdAsync(request.StudentId);
+        var student = await _studentRepository.GetByIdAsync(request.StudentId,cancellationToken);
         if (student is null)
             return AddStudentReportErrors.StudentNotFound;
 
