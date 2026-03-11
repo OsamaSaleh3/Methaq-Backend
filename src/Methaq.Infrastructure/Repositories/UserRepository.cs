@@ -97,4 +97,17 @@ public class UserRepository : IUserRepository
 
         return result;
     }
+
+    public Task<ApplicationUser?> GetUserProfileAsync(string userId)
+    {
+        return _context.Users
+            .Include(u => u.Student)
+            .Include(u => u.Employee)
+            .FirstOrDefaultAsync(u => u.Id == userId);
+    }
+
+    public Task<bool> ChangePasswordAsync(ApplicationUser user, string currentPassword, string newPassword)
+    {
+        throw new NotImplementedException();
+    }
 }

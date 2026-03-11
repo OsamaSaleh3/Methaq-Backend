@@ -23,6 +23,10 @@ namespace Methaq.Application.Common.Interfaces
         Task UpdateAsync(ApplicationUser user);
         Task<List<(ApplicationUser User, string Role)>> GetPendingAccountsAsync();
 
+        Task<ApplicationUser?> GetUserProfileAsync(string userId);
+
+        Task<IdentityResult> ChangePasswordAsync(ApplicationUser user, string currentPassword, string newPassword);
+
 
     }
 }
