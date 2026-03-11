@@ -26,8 +26,8 @@ public class GetSectionsByCenterQueryHandler : IRequestHandler<GetSectionsByCent
         var response = sections.Select(s => new SectionSummaryResponse(
             Id: s.Id,
             Name: s.Name,
-            AcademicLevel: s.AcademicLevel.ToString(),
-            Status: s.Status.ToString(),
+            AcademicLevel: (int)s.AcademicLevel,
+            Status: (int)s.Status,
             SupervisorName: s.Supervisor.User.FullName,
             StudentsCount: s.GetStudentCount()
         )).ToList();

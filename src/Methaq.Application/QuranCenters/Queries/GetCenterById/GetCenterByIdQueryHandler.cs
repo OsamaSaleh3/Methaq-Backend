@@ -25,7 +25,7 @@ public class GetCenterByIdQueryHandler : IRequestHandler<GetCenterByIdQuery, Err
             Description: center.Description,
             Location: center.Location,
             PhoneNumber: center.PhoneNumber,
-            Status: center.Status.ToString(),
+            Status: (int)center.Status,
             ManagerId: center.ManagerId,
             ManagerName: center.Manager.User.FullName,
             SectionsCount: center.Sections.Count,

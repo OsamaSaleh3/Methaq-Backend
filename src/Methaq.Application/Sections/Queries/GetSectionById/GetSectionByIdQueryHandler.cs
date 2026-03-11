@@ -22,15 +22,15 @@ public class GetSectionByIdQueryHandler : IRequestHandler<GetSectionByIdQuery, E
         return new SectionDetailsResponse(
             Id: section.Id,
             Name: section.Name,
-            AcademicLevel: section.AcademicLevel.ToString(),
-            Status: section.Status.ToString(),
+            AcademicLevel: (int)section.AcademicLevel,
+            Status: (int)section.Status,
             CenterId: section.CenterId,
             CenterName: section.Center.Name,
             SupervisorId: section.SupervisorId,
             SupervisorName: section.Supervisor.User.FullName,
             ScheduleDays: section.Schedule.Days.Select(d => d.ToString()).ToList(),
-            StartTime: section.Schedule.StartTime.ToString(),
-            EndTime: section.Schedule.EndTime.ToString(),
+            StartTime: section.Schedule.StartTime,
+            EndTime: section.Schedule.EndTime,
             StudentsCount: section.GetStudentCount());
     }
 }

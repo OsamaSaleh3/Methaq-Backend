@@ -8,7 +8,7 @@ public interface INotificationSender
         Guid Id,
         string Title,
         string Content,
-        string Type,
+        int Type,
         bool IsRead,
         Guid? RelatedEntityId,
         DateTime CreatedAt

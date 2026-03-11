@@ -10,8 +10,8 @@ public record GetCenterSectionsQuery(
 public record SectionSummaryResponse(
     Guid Id,
     string Name,
-    string AcademicLevel,
-    string Status,
+    int AcademicLevel,
+    int Status,
     string SupervisorName,
     int StudentsCount
 );

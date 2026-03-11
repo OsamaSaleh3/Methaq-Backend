@@ -21,7 +21,7 @@ public class GetAllCentersQueryHandler : IRequestHandler<GetAllCentersQuery, Err
             Id: center.Id,
             Name: center.Name,
             Location: center.Location,
-            Status: center.Status.ToString(),
+            Status: (int)center.Status,
             ManagerName: center.Manager.User.FullName,
             SectionsCount: center.Sections.Count
         )).ToList();

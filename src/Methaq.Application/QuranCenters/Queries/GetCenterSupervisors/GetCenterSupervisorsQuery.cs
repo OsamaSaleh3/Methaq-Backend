@@ -12,5 +12,5 @@ public record SupervisorResponse(
     string FullName,
     string Email,
     string Specialization,
-    string EmploymentStatus
+    int EmploymentStatus
 );

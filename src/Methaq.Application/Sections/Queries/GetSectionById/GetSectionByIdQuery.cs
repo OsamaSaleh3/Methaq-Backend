@@ -10,14 +10,14 @@ public record GetSectionByIdQuery(
 public record SectionDetailsResponse(
     Guid Id,
     string Name,
-    string AcademicLevel,
-    string Status,
+    int AcademicLevel,
+    int Status,
     Guid CenterId,
     string CenterName,
     Guid SupervisorId,
     string SupervisorName,
     List<string> ScheduleDays,
-    string StartTime,
-    string EndTime,
+    TimeOnly StartTime,
+    TimeOnly EndTime,
     int StudentsCount
 );

@@ -12,9 +12,9 @@ public record LectureDetailsResponse(
     Guid SectionId,
     string SectionName,
     DateTime Date,
-    string StartTime,
-    string EndTime,
-    string Status,
+    TimeOnly StartTime,
+    TimeOnly EndTime,
+    int Status,
     string? Notes,
     int AttendanceCount,
     int TasksCount

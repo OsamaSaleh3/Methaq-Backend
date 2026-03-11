@@ -13,7 +13,7 @@ public record CenterResponse(
    string Description,
    string Location,
    string? PhoneNumber,
-   string Status,
+   int Status,
    Guid ManagerId,
    string ManagerName,
    int SectionsCount,

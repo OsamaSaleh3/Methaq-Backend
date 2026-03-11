@@ -12,7 +12,7 @@ public record MyEnrollmentRequestResponse(
     Guid CenterId,
     string CenterName,
     string CenterLocation,
-    string Status,
+    int Status,
     string? RejectionReason,
     DateTime CreatedAt
 );

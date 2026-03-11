@@ -24,9 +24,9 @@ public class GetLectureByIdQueryHandler : IRequestHandler<GetLectureByIdQuery, E
             SectionId: lecture.SectionId,
             SectionName: lecture.Section.Name,
             Date: lecture.Date,
-            StartTime: lecture.StartTime.ToString(),
-            EndTime: lecture.EndTime.ToString(),
-            Status: lecture.Status.ToString(),
+            StartTime: lecture.StartTime,
+            EndTime: lecture.EndTime,
+            Status: (int)lecture.Status,
             Notes: lecture.Notes,
             AttendanceCount: lecture.AttendanceRecords.Count,
             TasksCount: lecture.SectionTasks.Count);

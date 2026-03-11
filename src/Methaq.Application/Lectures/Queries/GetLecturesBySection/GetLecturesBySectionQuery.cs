@@ -10,9 +10,9 @@ public record GetLecturesBySectionQuery(
 public record LectureSummaryResponse(
     Guid Id,
     DateTime Date,
-    string StartTime,
-    string EndTime,
-    string Status,
+    TimeOnly StartTime,
+    TimeOnly EndTime,
+    int Status,
     int AttendanceCount,
     int TasksCount
 );

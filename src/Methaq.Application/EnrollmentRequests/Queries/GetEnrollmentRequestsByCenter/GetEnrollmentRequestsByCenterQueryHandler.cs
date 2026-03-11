@@ -28,7 +28,7 @@ public class GetEnrollmentRequestsByCenterQueryHandler : IRequestHandler<GetEnro
             StudentId: r.StudentId,
             StudentName: r.Student.User.FullName,
             StudentEmail: r.Student.User.Email!,
-            Status: r.Status.ToString(),
+            Status: (int)r.Status,
             RejectionReason: r.RejectionReason,
             CreatedAt: r.CreatedAt
         )).ToList();

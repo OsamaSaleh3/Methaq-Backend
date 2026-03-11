@@ -23,13 +23,13 @@ public class GetEmployeesByCenterQueryHandler : IRequestHandler<GetEmployeesByCe
             e.User.FullName,
             e.User.Email!,
             e.User.PhoneNumber!,
-            e.Degree.ToString(),
+            (int)e.Degree,
             e.Specialization,
             e.IslamicQualifications,
             e.CurrentJob,
             e.HireDate,
-            e.EmploymentStatus.ToString(),
-            e.Role.ToString(),
+            (int)e.EmploymentStatus,
+            (int)e.Role,
             e.CenterId)).ToList();
     }
 }

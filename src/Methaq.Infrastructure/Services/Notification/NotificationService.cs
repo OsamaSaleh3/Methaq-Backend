@@ -35,7 +35,7 @@ public class NotificationService : INotificationService
             notification.Id,
             notification.Title,
             notification.Content,
-            notification.Type.ToString(),
+            (int)notification.Type,
             notification.IsRead,
             notification.RelatedEntityId,
             notification.CreatedAt));

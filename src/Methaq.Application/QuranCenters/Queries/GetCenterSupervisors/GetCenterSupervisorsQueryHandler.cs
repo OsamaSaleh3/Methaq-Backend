@@ -24,7 +24,7 @@ public class GetCenterSupervisorsQueryHandler : IRequestHandler<GetCenterSupervi
             FullName: s.User.FullName,
             Email: s.User.Email!,
             Specialization: s.Specialization,
-            EmploymentStatus: s.EmploymentStatus.ToString()
+            EmploymentStatus: (int)s.EmploymentStatus
         )).ToList();
 
         return response;

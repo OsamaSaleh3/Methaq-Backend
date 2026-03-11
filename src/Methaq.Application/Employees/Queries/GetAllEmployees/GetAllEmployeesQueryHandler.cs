@@ -23,13 +23,13 @@ public class GetAllEmployeesQueryHandler : IRequestHandler<GetAllEmployeesQuery,
             employee.User.FullName,
             employee.User.Email!,
             employee.User.PhoneNumber!,
-            employee.Degree.ToString(),
+            (int)employee.Degree,
             employee.Specialization,
             employee.IslamicQualifications,
             employee.CurrentJob,
             employee.HireDate,
-            employee.EmploymentStatus.ToString(),
-            employee.Role.ToString(),
+            (int)employee.EmploymentStatus,
+            (int)employee.Role,
             employee.CenterId)).ToList();
     }
 }

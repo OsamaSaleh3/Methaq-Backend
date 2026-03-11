@@ -22,7 +22,7 @@ public class GetMyEnrollmentRequestsQueryHandler : IRequestHandler<GetMyEnrollme
             CenterId: r.CenterId,
             CenterName: r.Center.Name,
             CenterLocation: r.Center.Location,
-            Status: r.Status.ToString(),
+            Status: (int)r.Status,
             RejectionReason: r.RejectionReason,
             CreatedAt: r.CreatedAt
         )).ToList();

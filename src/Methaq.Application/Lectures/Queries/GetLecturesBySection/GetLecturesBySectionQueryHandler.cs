@@ -28,9 +28,9 @@ public class GetLecturesBySectionQueryHandler : IRequestHandler<GetLecturesBySec
         var response = lectures.Select(l => new LectureSummaryResponse(
             Id: l.Id,
             Date: l.Date,
-            StartTime: l.StartTime.ToString(),
-            EndTime: l.EndTime.ToString(),
-            Status: l.Status.ToString(),
+            StartTime: l.StartTime,
+            EndTime: l.EndTime,
+            Status: (int)l.Status,
             AttendanceCount: l.AttendanceRecords.Count,
             TasksCount: l.SectionTasks.Count
         )).ToList();

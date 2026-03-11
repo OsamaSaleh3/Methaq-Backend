@@ -11,12 +11,12 @@ public record EmployeeResponse(
     string FullName,
     string Email,
     string PhoneNumber,
-    string Degree,
+    int Degree,
     string Specialization,
     string? IslamicQualifications,
     string? CurrentJob,
     DateTime HireDate,
-    string EmploymentStatus,
-    string Role,
+    int EmploymentStatus,
+    int Role,
     Guid? CenterId
 );

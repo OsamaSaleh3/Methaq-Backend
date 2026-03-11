@@ -9,7 +9,7 @@ public record CenterSummaryResponse(
     Guid Id,
     string Name,
     string Location,
-    string Status,
+    int Status,
     string ManagerName,
     int SectionsCount
 );

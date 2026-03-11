@@ -12,7 +12,7 @@ public record EnrollmentRequestResponse(
     Guid StudentId,
     string StudentName,
     string StudentEmail,
-    string Status,
+    int Status,
     string? RejectionReason,
     DateTime CreatedAt
 );
