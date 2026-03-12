@@ -8,5 +8,7 @@ public record SendMessageCommand(
     Guid GroupChatId,
     string SenderId,
     string Content,
-    string? AttachmentUrl
+    Stream? AttachmentStream,      
+    string? AttachmentFileName,    
+    string? AttachmentContentType
 ) : IRequest<ErrorOr<MessageDto>>;

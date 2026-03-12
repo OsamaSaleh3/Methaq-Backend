@@ -35,7 +35,7 @@ public class GroupMessage : BaseEntity
         if (string.IsNullOrWhiteSpace(senderId))
             return GroupChatErrors.SenderIdRequired;
 
-        if (string.IsNullOrWhiteSpace(content))
+        if (string.IsNullOrWhiteSpace(content) && attachmentUrl is null)
             return GroupChatErrors.ContentRequired;
 
         return new GroupMessage(groupChatId, senderId, content, attachmentUrl);

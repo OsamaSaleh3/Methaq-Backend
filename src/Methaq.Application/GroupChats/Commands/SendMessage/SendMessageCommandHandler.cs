@@ -12,13 +12,16 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Err
     private readonly IUserRepository _userRepository;
     private readonly IChatSender _chatSender;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IFileService _fileService;
 
-    public SendMessageCommandHandler(IGroupChatRepository groupChatRepository, IUserRepository userRepository, IChatSender chatSender, IUnitOfWork unitOfWork)
+
+    public SendMessageCommandHandler(IGroupChatRepository groupChatRepository, IUserRepository userRepository, IChatSender chatSender, IUnitOfWork unitOfWork, IFileService fileService)
     {
         _groupChatRepository = groupChatRepository;
         _userRepository = userRepository;
         _chatSender = chatSender;
         _unitOfWork = unitOfWork;
+        _fileService = fileService;
     }
 
     public async Task<ErrorOr<MessageDto>> Handle(SendMessageCommand request, CancellationToken cancellationToken)
@@ -34,12 +37,21 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Err
         if (!chat.Members.Any(m => m.Id == request.SenderId))
             return SendMessageErrors.SenderNotMember;
 
+        string? attachmentUrl = null;
+        if (request.AttachmentStream is not null && request.AttachmentFileName is not null)
+        {
+            attachmentUrl = await _fileService.UploadAsync(
+                request.AttachmentStream,
+                request.AttachmentFileName,
+                "methaq/chat");
+        }
+
         var messageResult = GroupMessage.Create(
             request.GroupChatId,
             request.SenderId,
             request.Content,
-            request.AttachmentUrl
-            );
+            attachmentUrl);
+
         if (messageResult.IsError)
             return messageResult.Errors;
 
@@ -52,17 +64,16 @@ public class SendMessageCommandHandler : IRequestHandler<SendMessageCommand, Err
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         var messageDto = new MessageDto(
-           message.Id,
-           message.GroupChatId,
-           message.SenderId,
-           sender.FullName,
-           message.Content,
-           message.AttachmentUrl,
-           message.CreatedAt);
+            message.Id,
+            message.GroupChatId,
+            message.SenderId,
+            sender.FullName,
+            message.Content,
+            message.AttachmentUrl,
+            message.CreatedAt);
 
         await _chatSender.SendMessageAsync(request.GroupChatId, messageDto);
 
         return messageDto;
-
     }
 }

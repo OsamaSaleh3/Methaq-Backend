@@ -29,7 +29,10 @@ public class GroupChatsController : BaseController
             groupChatId,
             UserId,
             request.Content,
-            request.AttachmentUrl);
+            request.Attachment?.OpenReadStream(),
+            request.Attachment?.FileName,
+            request.Attachment?.ContentType
+            );
 
         var result = await _mediator.Send(command);
         return HandleResult(result);

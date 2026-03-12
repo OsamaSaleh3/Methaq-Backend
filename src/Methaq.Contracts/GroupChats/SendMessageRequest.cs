@@ -1,6 +1,7 @@
-﻿namespace Methaq.Contracts.GroupChats;
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Methaq.Contracts.GroupChats;
 
 public record SendMessageRequest(
     string Content,
-    string? AttachmentUrl
-);
+    IFormFile? Attachment);

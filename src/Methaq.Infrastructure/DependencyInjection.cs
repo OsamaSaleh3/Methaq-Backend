@@ -7,6 +7,7 @@ using Methaq.Infrastructure.Repositories;
 using Methaq.Infrastructure.Services;
 using Methaq.Infrastructure.Services.Chat;
 using Methaq.Infrastructure.Services.Emails;
+using Methaq.Infrastructure.Services.FileService;
 using Methaq.Infrastructure.Services.JWT;
 using Methaq.Infrastructure.Services.OTP;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -88,6 +89,7 @@ public static class DependencyInjection
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.Configure<SuperAdminSettings>(configuration.GetSection("SuperAdminSettings"));
+        services.Configure<CloudinarySettings>(configuration.GetSection("CloudinarySettings"));
 
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IOtpService, OtpService>();
@@ -110,6 +112,8 @@ public static class DependencyInjection
         services.AddScoped<INotificationRepository, NotificationRepository>();
         services.AddScoped<INotificationService, NotificationService>();
         services.AddScoped<INotificationSender, NotificationSender>();
+        services.AddScoped<IFileService, CloudinaryService>();
+
 
         return services;
     }
