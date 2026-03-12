@@ -16,7 +16,7 @@ public class UserChatLastReadConfiguration : IEntityTypeConfiguration<UserChatLa
             .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(x => x.GroupChat)
-            .WithMany()
+            .WithMany(g=>g.LastReads) 
             .HasForeignKey(x => x.GroupChatId)
             .OnDelete(DeleteBehavior.Cascade);
 

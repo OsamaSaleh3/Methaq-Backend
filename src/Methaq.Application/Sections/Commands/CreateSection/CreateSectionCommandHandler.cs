@@ -3,7 +3,6 @@ using MediatR;
 using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.GroupChats;
 using Methaq.Domain.Sections;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Methaq.Application.Sections.Commands.CreateSection;
 
@@ -15,7 +14,12 @@ public class CreateSectionCommandHandler : IRequestHandler<CreateSectionCommand,
     private readonly IGroupChatRepository _groupChatRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateSectionCommandHandler(ISectionRepository sectionRepository, IQuranCenterRepository centerRepository, IEmployeeRepository employeeRepository, IGroupChatRepository groupChatRepository, IUnitOfWork unitOfWork)
+    public CreateSectionCommandHandler(
+        ISectionRepository sectionRepository,
+        IQuranCenterRepository centerRepository,
+        IEmployeeRepository employeeRepository,
+        IGroupChatRepository groupChatRepository,
+        IUnitOfWork unitOfWork)
     {
         _sectionRepository = sectionRepository;
         _centerRepository = centerRepository;
@@ -41,50 +45,39 @@ public class CreateSectionCommandHandler : IRequestHandler<CreateSectionCommand,
             return CreateSectionErrors.SupervisorNotInCenter;
 
         var schedule = new SectionSchedule(
-           request.ScheduleDays,
-           request.StartTime,
-           request.EndTime);
+            request.ScheduleDays,
+            request.StartTime,
+            request.EndTime);
 
         var sectionResult = Section.Create(
             request.Name,
             request.AcademicLevel,
             request.CenterId,
             request.SupervisorId,
-            schedule
-            );
-        if(sectionResult.IsError)
+            schedule);
+
+        if (sectionResult.IsError)
             return sectionResult.Errors;
 
-        var section= sectionResult.Value;
+        var section = sectionResult.Value;
 
-        var ChatResult = GroupChat.Create(
-            section.Name+" Chat",
-             section.Id
-            );
-        if (ChatResult.IsError)
-            return ChatResult.Errors;
+        var chatResult = GroupChat.Create(
+            section.Name + " Chat",
+            section.Id);
 
-        var chat=ChatResult.Value;
+        if (chatResult.IsError)
+            return chatResult.Errors;
 
-        var supervisorUser = supervisor.User;
-        var addSupervisorResult = chat.AddMember(supervisorUser);
+        var chat = chatResult.Value;
+
+        var addSupervisorResult = chat.AddMember(supervisor.User);
         if (addSupervisorResult.IsError)
             return addSupervisorResult.Errors;
 
-        await _unitOfWork.BeginTransactionAsync();
+        await _sectionRepository.AddAsync(section, cancellationToken);
+        await _groupChatRepository.AddAsync(chat);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        try
-        {
-            await _sectionRepository.AddAsync(section,cancellationToken);
-            await _groupChatRepository.AddAsync(chat);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-            await _unitOfWork.CommitTransactionAsync();
-        }
-        catch
-        {
-            await _unitOfWork.RollbackTransactionAsync();
-            return CreateSectionErrors.CreateFailed;
-        }
         return section.Id;
     }
 }

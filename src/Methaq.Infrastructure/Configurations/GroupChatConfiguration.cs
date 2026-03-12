@@ -26,6 +26,10 @@ public class GroupChatConfiguration : IEntityTypeConfiguration<GroupChat>
             .WithMany()
             .UsingEntity(j => j.ToTable("GroupChatMembers"));
 
+        builder.Navigation(g => g.Members)
+        .HasField("_members")
+        .UsePropertyAccessMode(PropertyAccessMode.Field);
+
         builder.HasMany(g => g.Messages)
             .WithOne()
             .HasForeignKey(m => m.GroupChatId)

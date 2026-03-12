@@ -3,6 +3,7 @@ using System;
 using Methaq.Infrastructure.Common.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Methaq.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260312150604_UpdateGroupChatMemberAccessMode")]
+    partial class UpdateGroupChatMemberAccessMode
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -419,6 +422,9 @@ namespace Methaq.Infrastructure.Migrations
                     b.Property<Guid>("GroupChatId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("GroupChatId1")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("LastReadAt")
                         .HasColumnType("timestamp with time zone");
 
@@ -428,6 +434,8 @@ namespace Methaq.Infrastructure.Migrations
                     b.HasKey("UserId", "GroupChatId");
 
                     b.HasIndex("GroupChatId");
+
+                    b.HasIndex("GroupChatId1");
 
                     b.HasIndex("LastReadMessageId");
 
@@ -1042,10 +1050,14 @@ namespace Methaq.Infrastructure.Migrations
             modelBuilder.Entity("Methaq.Domain.GroupChats.UserChatLastRead", b =>
                 {
                     b.HasOne("Methaq.Domain.GroupChats.GroupChat", "GroupChat")
-                        .WithMany("LastReads")
+                        .WithMany()
                         .HasForeignKey("GroupChatId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Methaq.Domain.GroupChats.GroupChat", null)
+                        .WithMany("LastReads")
+                        .HasForeignKey("GroupChatId1");
 
                     b.HasOne("Methaq.Domain.GroupChats.GroupMessage", null)
                         .WithMany()
