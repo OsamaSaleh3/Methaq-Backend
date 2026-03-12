@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Methaq.Application.GroupChats.Commands.DeleteMessage;
 using Methaq.Application.GroupChats.Commands.EditMessage;
+using Methaq.Application.GroupChats.Commands.MarkChatAsRead;
 using Methaq.Application.GroupChats.Commands.SendMessage;
 using Methaq.Application.GroupChats.Queries.GetChatBySection;
 using Methaq.Application.GroupChats.Queries.GetMessages;
@@ -80,4 +81,13 @@ public class GroupChatsController : BaseController
         var result = await _mediator.Send(query);
         return HandleResult(result);
     }
+
+    [HttpPut("{chatId:guid}/mark-as-read")]
+    public async Task<IActionResult> MarkChatAsRead(Guid chatId, MarkChatAsReadRequest request)
+    {
+        var command = new MarkChatAsReadCommand(UserId, chatId, request.LastMessageId);
+        var result = await _mediator.Send(command);
+        return HandleResult(result);
+    }
+
 }
