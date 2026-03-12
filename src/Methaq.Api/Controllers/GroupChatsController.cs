@@ -22,8 +22,9 @@ public class GroupChatsController : BaseController
         _mediator = mediator;
     }
 
-    [HttpPost("{groupChatId}/messages")]
-    public async Task<IActionResult> SendMessage(Guid groupChatId, [FromBody] SendMessageRequest request)
+    [HttpPost("{groupChatId}/message")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> SendMessage(Guid groupChatId, [FromForm] SendMessageRequest request)
     {
         var command = new SendMessageCommand(
             groupChatId,
