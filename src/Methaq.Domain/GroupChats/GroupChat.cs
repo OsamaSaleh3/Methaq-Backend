@@ -19,6 +19,9 @@ public class GroupChat : BaseEntity
     private readonly List<GroupMessage> _messages = [];
     public IReadOnlyCollection<GroupMessage> Messages => _messages.AsReadOnly();
 
+    private readonly List<UserChatLastRead> _lastReads = [];
+    public IReadOnlyCollection<UserChatLastRead> LastReads => _lastReads.AsReadOnly();
+
     protected GroupChat() { }
 
     private GroupChat(string name, Guid sectionId)

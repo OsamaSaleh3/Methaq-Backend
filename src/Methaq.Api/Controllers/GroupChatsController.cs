@@ -1,12 +1,13 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Methaq.Application.GroupChats.Commands.SendMessage;
-using Methaq.Application.GroupChats.Commands.EditMessage;
 using Methaq.Application.GroupChats.Commands.DeleteMessage;
+using Methaq.Application.GroupChats.Commands.EditMessage;
+using Methaq.Application.GroupChats.Commands.SendMessage;
 using Methaq.Application.GroupChats.Queries.GetChatBySection;
 using Methaq.Application.GroupChats.Queries.GetMessages;
+using Methaq.Application.GroupChats.Queries.GetMyChats;
 using Methaq.Contracts.GroupChats;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Methaq.Api.Controllers;
 
@@ -57,7 +58,7 @@ public class GroupChatsController : BaseController
     [HttpGet("section/{sectionId}")]
     public async Task<IActionResult> GetChatBySection(Guid sectionId)
     {
-        var query = new GetChatBySectionQuery(sectionId);
+        var query = new GetChatBySectionQuery(sectionId,UserId);
 
         var result = await _mediator.Send(query);
         return HandleResult(result);
@@ -68,6 +69,14 @@ public class GroupChatsController : BaseController
     {
         var query = new GetMessagesQuery(groupChatId);
 
+        var result = await _mediator.Send(query);
+        return HandleResult(result);
+    }
+
+    [HttpGet("my-chats")]
+    public async Task<IActionResult> GetMyChats()
+    {
+        var query = new GetMyChatsQuery(UserId);
         var result = await _mediator.Send(query);
         return HandleResult(result);
     }

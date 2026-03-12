@@ -54,4 +54,24 @@ public class GroupChatRepository : IGroupChatRepository
     {
         await _context.GroupChats.AddAsync(groupChat);
     }
+
+    public async Task<List<GroupChat>> GetBySupervisorIdAsync(string userId, CancellationToken cancellationToken)
+    {
+        return await _context.GroupChats
+        .Include(c => c.Members)
+        .Include(c => c.Messages)
+            .ThenInclude(m => m.Sender)
+        .Include(c => c.LastReads)
+        .Where(c => c.Section.Supervisor.UserId == userId)
+        .ToListAsync(cancellationToken);
+    }
+    public async Task<UserChatLastRead?> GetLastReadAsync(string userId, Guid groupChatId, CancellationToken cancellationToken)
+    {
+        return await _context.UserChatLastReads
+            .FirstOrDefaultAsync(lr => lr.UserId == userId && lr.GroupChatId == groupChatId, cancellationToken);
+    }
+    public async Task AddLastReadAsync(UserChatLastRead lastRead, CancellationToken cancellationToken)
+    {
+        await _context.UserChatLastReads.AddAsync(lastRead, cancellationToken);
+    }
 }

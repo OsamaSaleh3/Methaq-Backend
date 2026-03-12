@@ -36,6 +36,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<GroupMessage> GroupMessages => Set<GroupMessage>();
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<UserChatLastRead> UserChatLastReads => Set<UserChatLastRead>();
+
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

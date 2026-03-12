@@ -10,4 +10,7 @@ public interface IGroupChatRepository
     Task<GroupMessage?> GetMessageByIdAsync(Guid messageId);
     Task<List<GroupMessage>> GetMessagesByGroupChatIdAsync(Guid groupChatId);
     Task AddAsync(GroupChat groupChat);
+    Task<List<GroupChat>> GetBySupervisorIdAsync(string userId, CancellationToken cancellationToken);
+    Task<UserChatLastRead?> GetLastReadAsync(string userId, Guid groupChatId, CancellationToken cancellationToken);
+    Task AddLastReadAsync(UserChatLastRead lastRead, CancellationToken cancellationToken);
 }
