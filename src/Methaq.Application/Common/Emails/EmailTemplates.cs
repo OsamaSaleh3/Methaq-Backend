@@ -14,6 +14,56 @@ namespace Methaq.Application.Common.Emails
         public static string EnrollmentApproved() => "Your Enrollment Request Has Been Approved";
         public static string EnrollmentRejected() => "Update on Your Enrollment Request";
         public static string FinalReport() => "Your Final Report is Ready";
+        public static string ForgotPassword() => "Reset Your Methaq Password";
+
+        public static string ForgotPassword(string fullName, string otp) => $"""
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        </head>
+        <body style="margin: 0; padding: 0; background-color: #f4f4f4; font-family: Arial, sans-serif;">
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="center" style="padding: 40px 0;">
+                        <table width="600" cellpadding="0" cellspacing="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <tr>
+                                <td style="background-color: #3B666B; padding: 30px; text-align: center;">
+                                    <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Methaq</h1>
+                                    <p style="color: #a8d5b5; margin: 5px 0 0;">Quran Memorization System</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 40px 30px;">
+                                    <h2 style="color: #333333; margin: 0 0 10px;">Hello, {fullName}</h2>
+                                    <p style="color: #666666; line-height: 1.6;">We received a request to reset your password. Use the code below to proceed.</p>
+                                    <table width="100%" cellpadding="0" cellspacing="0" style="margin: 30px 0;">
+                                        <tr>
+                                            <td align="center">
+                                                <div style="background-color: #f0f7f4; border: 2px dashed #3B666B; border-radius: 8px; padding: 20px 40px; display: inline-block;">
+                                                    <p style="color: #666666; margin: 0 0 8px; font-size: 14px;">Your password reset code</p>
+                                                    <p style="color: #3B666B; font-size: 36px; font-weight: bold; margin: 0; letter-spacing: 8px;">{otp}</p>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <p style="color: #666666; line-height: 1.6;">This code will expire in <strong>10 minutes</strong>. If you did not request a password reset, please ignore this email.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="background-color: #f9f9f9; padding: 20px 30px; text-align: center; border-top: 1px solid #eeeeee;">
+                                    <p style="color: #999999; font-size: 12px; margin: 0;">This is an automated message, please do not reply.</p>
+                                    <p style="color: #999999; font-size: 12px; margin: 5px 0 0;">© 2025 Methaq. All rights reserved.</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>
+        """;
 
         public static string OtpConfirmation(string fullName, string otp) => $"""
         <!DOCTYPE html>

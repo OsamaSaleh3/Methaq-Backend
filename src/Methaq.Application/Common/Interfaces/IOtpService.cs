@@ -9,5 +9,7 @@ namespace Methaq.Application.Common.Interfaces
     {
         Task<string> GenerateOtpAsync(ApplicationUser user);
         Task<bool> VerifyAndConfirmEmailAsync(ApplicationUser user, string otp);
+        Task<bool> VerifyOtpAsync(ApplicationUser user, string otp); 
+
     }
 }

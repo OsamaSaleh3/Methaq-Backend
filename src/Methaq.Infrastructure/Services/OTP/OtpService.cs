@@ -26,5 +26,16 @@ namespace Methaq.Infrastructure.Services.OTP
             var result = await _userManager.ConfirmEmailAsync(user, otp);
             return result.Succeeded;
         }
+
+        public async Task<bool> VerifyOtpAsync(ApplicationUser user, string otp)
+        {
+            var result = await _userManager.VerifyUserTokenAsync(
+                user,
+                _userManager.Options.Tokens.EmailConfirmationTokenProvider,
+                UserManager<ApplicationUser>.ConfirmEmailTokenPurpose,
+                otp);
+
+            return result;
+        }
     }
 }

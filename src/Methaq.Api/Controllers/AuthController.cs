@@ -1,12 +1,14 @@
 using MediatR;
 using Methaq.Application.Auth.Commands.ApproveAccount;
 using Methaq.Application.Auth.Commands.ConfirmEmail;
+using Methaq.Application.Auth.Commands.ForgetPassword;
 using Methaq.Application.Auth.Commands.Login;
 using Methaq.Application.Auth.Commands.RefreshTokens;
 using Methaq.Application.Auth.Commands.RegisterEmployee;
 using Methaq.Application.Auth.Commands.RegisterStudent;
 using Methaq.Application.Auth.Commands.RejectAccount;
 using Methaq.Application.Auth.Commands.ResendOtp;
+using Methaq.Application.Auth.Commands.ResetPassword;
 using Methaq.Application.Auth.Queries.GetPendingAccounts;
 using Methaq.Contracts.Auth;
 using Methaq.Domain.Employees.enums;
@@ -135,6 +137,24 @@ public class AuthController : BaseController
     {
         var query = new GetPendingAccountsQuery();
         var result = await _mediator.Send(query);
+        return HandleResult(result);
+    }
+
+    [HttpPost("forgot-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordRequest request)
+    {
+        var command = new ForgotPasswordCommand(request.Email);
+        var result = await _mediator.Send(command);
+        return HandleResult(result);
+    }
+
+    [HttpPost("reset-password")]
+    [AllowAnonymous]
+    public async Task<IActionResult> ResetPassword(ResetPasswordRequest request)
+    {
+        var command = new ResetPasswordCommand(request.Email, request.Otp, request.NewPassword);
+        var result = await _mediator.Send(command);
         return HandleResult(result);
     }
 }

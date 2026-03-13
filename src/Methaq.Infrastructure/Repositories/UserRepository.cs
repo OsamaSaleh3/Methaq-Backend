@@ -1,4 +1,5 @@
-﻿using Methaq.Application.Common.Interfaces;
+﻿using ErrorOr;
+using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.ApplicationUsers.enums;
 using Methaq.Domain.Employees;
@@ -111,5 +112,17 @@ public class UserRepository : IUserRepository
         return _userManager.ChangePasswordAsync(user, currentPassword, newPassword);
     }
 
- 
+    public async Task<string> GeneratePasswordResetTokenAsync(ApplicationUser user)
+    {
+        return await _userManager.GeneratePasswordResetTokenAsync(user);
+    }
+
+    public async Task<IdentityResult> ResetPasswordAsync(ApplicationUser user, string token, string newPassword)
+    {
+        var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            return result;
+    }
+
+
 }
