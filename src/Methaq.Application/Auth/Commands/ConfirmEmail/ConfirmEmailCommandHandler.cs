@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Interfaces;
+using Methaq.Domain.ApplicationUsers.enums;
 
 namespace Methaq.Application.Auth.Commands.ConfirmEmail;
 
@@ -8,11 +9,13 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, E
 {
     private readonly IUserRepository _userRepository;
     private readonly IOtpService _otpService;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public ConfirmEmailCommandHandler(IUserRepository userRepository, IOtpService otpService)
+    public ConfirmEmailCommandHandler(IUserRepository userRepository, IOtpService otpService, IUnitOfWork unitOfWork)
     {
         _userRepository = userRepository;
         _otpService = otpService;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<ErrorOr<Success>> Handle(ConfirmEmailCommand request, CancellationToken cancellationToken)
@@ -27,11 +30,16 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, E
         {
             user.EmailConfirmed = true;
             await _userRepository.UpdateAsync(user);
+            user.AccountStatus = AccountStatus.Approved;
             return Result.Success;
         }
         var isValid = await _otpService.VerifyAndConfirmEmailAsync(user, request.Otp);
         if (!isValid)
             return ConfirmEmailErrors.InvalidOtp;
+
+        user.AccountStatus = AccountStatus.Approved;
+        await _unitOfWork.SaveChangesAsync();
+
 
         return Result.Success;
 
