@@ -29,8 +29,8 @@ public class ConfirmEmailCommandHandler : IRequestHandler<ConfirmEmailCommand, E
         if (request.Otp == "123123")
         {
             user.EmailConfirmed = true;
-            await _userRepository.UpdateAsync(user);
             user.AccountStatus = AccountStatus.Approved;
+            await _userRepository.UpdateAsync(user);
             return Result.Success;
         }
         var isValid = await _otpService.VerifyAndConfirmEmailAsync(user, request.Otp);

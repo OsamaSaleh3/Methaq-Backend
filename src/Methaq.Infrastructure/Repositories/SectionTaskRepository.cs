@@ -28,7 +28,12 @@ public SectionTaskRepository(ApplicationDbContext context)
 
         public async Task<List<SectionTask>> GetByLectureIdAsync(Guid lectureId)
         {
-            return await _context.SectionTasks.Where(s => s.LectureId == lectureId).ToListAsync();
+            return await _context.SectionTasks
+                .Include(st=>st.AssignedBy)
+                    .ThenInclude(e=>e.User)
+                .Include(st=>st.Student)
+                    .ThenInclude(s=>s!.User)
+                .Where(s => s.LectureId == lectureId).ToListAsync();
         }
 
         public async Task<List<StudentTaskEvaluation>> GetEvaluationsByStudentIdAsync(Guid studentId)
