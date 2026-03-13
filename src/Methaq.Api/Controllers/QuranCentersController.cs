@@ -56,7 +56,7 @@ public class QuranCentersController : BaseController
         return HandleResult(result);
     }
 
-    [Authorize(Roles = "SuperAdmin,CenterManager")]
+    [Authorize(Roles = "SuperAdmin")]
     [HttpPost("{centerId}/supervisors")]
     public async Task<IActionResult> AddSupervisor(Guid centerId, [FromBody] AddSupervisorRequest request)
     {

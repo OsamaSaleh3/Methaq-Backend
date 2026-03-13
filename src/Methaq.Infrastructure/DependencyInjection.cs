@@ -1,8 +1,10 @@
 ﻿using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.AttendanceRecords;
+using Methaq.Domain.SupervisorEnrollmentRequests;
 using Methaq.Infrastructure.Common;
 using Methaq.Infrastructure.Common.Persistence;
+using Methaq.Infrastructure.Persistence.Repositories;
 using Methaq.Infrastructure.Repositories;
 using Methaq.Infrastructure.Services;
 using Methaq.Infrastructure.Services.Chat;
@@ -113,7 +115,7 @@ public static class DependencyInjection
         services.AddScoped<INotificationService, NotificationService>();
         services.AddScoped<INotificationSender, NotificationSender>();
         services.AddScoped<IFileService, CloudinaryService>();
-
+        services.AddScoped<ISupervisorEnrollmentRequestRepository, SupervisorEnrollmentRequestRepository>();
 
         return services;
     }

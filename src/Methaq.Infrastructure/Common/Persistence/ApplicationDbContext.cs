@@ -5,12 +5,13 @@ using Methaq.Domain.Employees;
 using Methaq.Domain.FinalReports;
 using Methaq.Domain.GroupChats;
 using Methaq.Domain.Lectures;
-using Methaq.Domain.SectionTasks;
 using Methaq.Domain.Notifications;
 using Methaq.Domain.QuranCenters;
 using Methaq.Domain.RefreshTokens;
 using Methaq.Domain.Sections;
+using Methaq.Domain.SectionTasks;
 using Methaq.Domain.Students;
+using Methaq.Domain.SupervisorEnrollmentRequests;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -38,7 +39,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<UserChatLastRead> UserChatLastReads => Set<UserChatLastRead>();
 
-
+    public DbSet<SupervisorEnrollmentRequest> SupervisorEnrollmentRequests => Set<SupervisorEnrollmentRequest>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
