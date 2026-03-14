@@ -6,6 +6,7 @@ using Methaq.Domain.FinalReports;
 using Methaq.Domain.GroupChats;
 using Methaq.Domain.Lectures;
 using Methaq.Domain.Notifications;
+using Methaq.Domain.PushTokens;
 using Methaq.Domain.QuranCenters;
 using Methaq.Domain.RefreshTokens;
 using Methaq.Domain.Sections;
@@ -38,8 +39,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Notification> Notifications => Set<Notification>();
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<UserChatLastRead> UserChatLastReads => Set<UserChatLastRead>();
-
     public DbSet<SupervisorEnrollmentRequest> SupervisorEnrollmentRequests => Set<SupervisorEnrollmentRequest>();
+    public DbSet<PushToken> PushTokens => Set<PushToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

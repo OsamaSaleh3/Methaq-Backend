@@ -9,15 +9,14 @@ public class NotificationService : INotificationService
 {
     private readonly INotificationRepository _notificationRepository;
     private readonly INotificationSender _notificationSender;
+    private readonly IPushNotificationService _pushNotificationService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public NotificationService(
-        INotificationRepository notificationRepository,
-        INotificationSender notificationSender,
-        IUnitOfWork unitOfWork)
+    public NotificationService(INotificationRepository notificationRepository, INotificationSender notificationSender, IPushNotificationService pushNotificationService, IUnitOfWork unitOfWork)
     {
         _notificationRepository = notificationRepository;
         _notificationSender = notificationSender;
+        _pushNotificationService = pushNotificationService;
         _unitOfWork = unitOfWork;
     }
 
@@ -39,5 +38,7 @@ public class NotificationService : INotificationService
             notification.IsRead,
             notification.RelatedEntityId,
             notification.CreatedAt));
+
+        await _pushNotificationService.SendAsync(userId, title, content);
     }
 }

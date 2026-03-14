@@ -17,6 +17,7 @@ secrets.json
 
 # App Settings
 appsettings.Development.json
+firebase-credentials.json
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

@@ -1,4 +1,6 @@
-﻿using Methaq.Application.Common.Interfaces;
+﻿using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.ApplicationUsers;
 using Methaq.Domain.AttendanceRecords;
 using Methaq.Domain.SupervisorEnrollmentRequests;
@@ -88,6 +90,25 @@ public static class DependencyInjection
         services.AddSignalR();
 
 
+        if (FirebaseApp.DefaultInstance is null)
+        {
+            var credentialJson = configuration["Firebase:CredentialJson"];
+            var credentialPath = configuration["Firebase:CredentialPath"];
+
+            GoogleCredential credential;
+
+            if (!string.IsNullOrEmpty(credentialJson))
+                credential = GoogleCredential.FromJson(credentialJson);
+            else
+                credential = GoogleCredential.FromFile(credentialPath);
+
+            FirebaseApp.Create(new AppOptions
+            {
+                Credential = credential
+            });
+        }
+
+
         services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.Configure<SuperAdminSettings>(configuration.GetSection("SuperAdminSettings"));
@@ -116,6 +137,8 @@ public static class DependencyInjection
         services.AddScoped<INotificationSender, NotificationSender>();
         services.AddScoped<IFileService, CloudinaryService>();
         services.AddScoped<ISupervisorEnrollmentRequestRepository, SupervisorEnrollmentRequestRepository>();
+        services.AddScoped<IPushTokenRepository, PushTokenRepository>();
+        services.AddScoped<IPushNotificationService, PushNotificationService>();
 
         return services;
     }
