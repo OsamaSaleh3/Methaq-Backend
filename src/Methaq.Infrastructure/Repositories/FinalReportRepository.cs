@@ -33,6 +33,7 @@ namespace Methaq.Infrastructure.Repositories
                 .Include(f=>f.StudentReports)
                     .ThenInclude(sr=>sr.Student)
                         .ThenInclude(s=>s.User)
+                .Include(f=>f.Section)
                 .FirstOrDefaultAsync(f => f.Id == id);
         }
 

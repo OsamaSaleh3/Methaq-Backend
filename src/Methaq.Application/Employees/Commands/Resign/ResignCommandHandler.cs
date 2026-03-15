@@ -2,6 +2,7 @@
 using MediatR;
 using Methaq.Application.Common.Interfaces;
 using Methaq.Domain.Employees.enums;
+using Methaq.Domain.Notifications.enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,12 +12,14 @@ namespace Methaq.Application.Employees.Commands.Resign
     public class ResignCommandHandler : IRequestHandler<ResignCommand, ErrorOr<Success>>
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly INotificationService _notificationService;
         private readonly IUnitOfWork _unitOfWork;
 
-        public ResignCommandHandler(IUnitOfWork unitOfWork, IEmployeeRepository employeeRepository)
+        public ResignCommandHandler(IUnitOfWork unitOfWork, IEmployeeRepository employeeRepository, INotificationService notificationService)
         {
             _unitOfWork = unitOfWork;
             _employeeRepository = employeeRepository;
+            _notificationService = notificationService;
         }
 
         public async Task<ErrorOr<Success>> Handle(ResignCommand request, CancellationToken cancellationToken)
@@ -33,6 +36,13 @@ namespace Methaq.Application.Employees.Commands.Resign
                 return resignResult.Errors;
 
             await _unitOfWork.SaveChangesAsync();
+
+            await _notificationService.SendAsync(
+                supervisor.UserId,
+                "تم تسجيل استقالتك",
+                $"تم تسجيل استقالتك من المنظومة",
+                NotificationType.EmployeeResigned,
+                supervisor.Id);
 
             return Result.Success;
         }

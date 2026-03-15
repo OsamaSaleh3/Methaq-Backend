@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Interfaces;
+using Methaq.Domain.Notifications.enums;
 
 namespace Methaq.Application.Sections.Commands.AddStudentToSection;
 
@@ -10,15 +11,17 @@ public class AddStudentToSectionCommandHandler : IRequestHandler<AddStudentToSec
     private readonly IStudentRepository _studentRepository;
     private readonly IEnrollmentRequestRepository _enrollmentRepository;
     private readonly IGroupChatRepository _groupChatRepository;
+    private readonly INotificationService _notificationService;
     private readonly IUnitOfWork _unitOfWork;
 
-    public AddStudentToSectionCommandHandler(ISectionRepository sectionRepository, IStudentRepository studentRepository, IEnrollmentRequestRepository enrollmentRepository, IGroupChatRepository groupChatRepository, IUnitOfWork unitOfWork)
+    public AddStudentToSectionCommandHandler(ISectionRepository sectionRepository, IStudentRepository studentRepository, IEnrollmentRequestRepository enrollmentRepository, IGroupChatRepository groupChatRepository, IUnitOfWork unitOfWork, INotificationService notificationService)
     {
         _sectionRepository = sectionRepository;
         _studentRepository = studentRepository;
         _enrollmentRepository = enrollmentRepository;
         _groupChatRepository = groupChatRepository;
         _unitOfWork = unitOfWork;
+        _notificationService = notificationService;
     }
 
     public async Task<ErrorOr<Success>> Handle(AddStudentToSectionCommand request, CancellationToken cancellationToken)
@@ -48,6 +51,14 @@ public class AddStudentToSectionCommandHandler : IRequestHandler<AddStudentToSec
         }
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+        await _notificationService.SendAsync(
+            student.UserId,
+            "تم تعيينك في حلقة",
+            $"تم تعيينك في حلقة {section.Name}، يمكنك الآن متابعة محاضراتك",
+            NotificationType.AddedToSection,
+            section.Id);
+
 
         return Result.Success;
     }

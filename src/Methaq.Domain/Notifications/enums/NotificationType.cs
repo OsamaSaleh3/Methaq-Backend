@@ -2,10 +2,18 @@
 {
     public enum NotificationType
     {
-        LectureReminder,     
-        EnrollmentApproved,  
-        EnrollmentRejected,  
-        SectionClosed,       
-        FinalReportReady     
+        General,
+        LectureReminder,
+        EnrollmentApproved,
+        EnrollmentRejected,
+        SectionClosed,
+        FinalReportReady,
+        SupervisorRequestApproved,
+        SupervisorRequestRejected,
+        AddedToSection,
+        RemovedFromSection,
+        NewMessage,
+        EmployeeReactivated,
+        EmployeeResigned
     }
 }

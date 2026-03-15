@@ -2,6 +2,8 @@ using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Emails;
 using Methaq.Application.Common.Interfaces;
+using Methaq.Domain.Notifications.enums;
+using Methaq.Domain.Students;
 
 namespace Methaq.Application.FinalReports.Commands.SendFinalReportEmail;
 
@@ -10,18 +12,21 @@ public class SendFinalReportEmailCommandHandler : IRequestHandler<SendFinalRepor
     private readonly IFinalReportRepository _finalReportRepository;
     private readonly IUserRepository _userRepository;
     private readonly IEmailService _emailService;
+    private readonly INotificationService _notificationService;
     private readonly IUnitOfWork _unitOfWork;
 
     public SendFinalReportEmailCommandHandler(
         IFinalReportRepository finalReportRepository,
         IUserRepository userRepository,
         IEmailService emailService,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        INotificationService notificationService)
     {
         _finalReportRepository = finalReportRepository;
         _userRepository = userRepository;
         _emailService = emailService;
         _unitOfWork = unitOfWork;
+        _notificationService = notificationService;
     }
 
     public async Task<ErrorOr<Success>> Handle(SendFinalReportEmailCommand command, CancellationToken cancellationToken)
@@ -53,6 +58,13 @@ public class SendFinalReportEmailCommandHandler : IRequestHandler<SendFinalRepor
                     studentReport.TotalScore
                     )
                 );
+
+            await _notificationService.SendAsync(
+             user.Id,
+           "التقرير النهائي جاهز ",
+           $" تم إصدار تقريرك النهائي، يمكنك الاطلاع عليه الآن عن طريق الايميل",
+           NotificationType.FinalReportReady,
+           report.Section.Id);
         }
 
         var markResult = report.MarkEmailSent();
@@ -60,6 +72,8 @@ public class SendFinalReportEmailCommandHandler : IRequestHandler<SendFinalRepor
             return markResult.Errors;
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+       
 
         return Result.Success;
     }
