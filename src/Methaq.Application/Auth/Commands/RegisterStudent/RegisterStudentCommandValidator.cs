@@ -42,7 +42,7 @@ public class RegisterStudentCommandValidator : AbstractValidator<RegisterStudent
 
         RuleFor(x => x.DateOfBirth)
             .NotEmpty().WithMessage("Date of birth is required.")
-            .Must(date => date < DateTime.UtcNow.AddYears(-5))
+            .Must(dob => dob <= DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-5)))
             .WithMessage("Student must be older than 5 years.");
 
         RuleFor(x => x.GuardianName)

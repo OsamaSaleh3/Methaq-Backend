@@ -42,7 +42,7 @@ public class RegisterEmployeeCommandValidator : AbstractValidator<RegisterEmploy
 
         RuleFor(x => x.DateOfBirth)
             .NotEmpty().WithMessage("Date of birth is required.")
-            .Must(date => date < DateTime.UtcNow.AddYears(-18))
+            .Must(dob => dob <= DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-18)))
             .WithMessage("Employee must be older than 18 years.");
 
         RuleFor(x => x.Degree)

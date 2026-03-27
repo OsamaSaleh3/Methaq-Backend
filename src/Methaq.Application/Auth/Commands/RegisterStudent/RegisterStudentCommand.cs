@@ -12,7 +12,7 @@ public record RegisterStudentCommand(
     string Password,
     string ConfirmPassword,
     string PhoneNumber,
-    DateTime DateOfBirth,
+    DateOnly DateOfBirth,
     string? NationalId,
     string? Address,
     string GuardianName,

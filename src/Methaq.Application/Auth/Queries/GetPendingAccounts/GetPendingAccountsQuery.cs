@@ -8,6 +8,6 @@ public record PendingAccountResponse(
    string FullName,
    string Email,
    string PhoneNumber,
-   DateTime DateOfBirth,
+   DateOnly DateOfBirth,
    string Role
 );

@@ -16,7 +16,7 @@ public record GetMyProfileQuery(string UserId) : IRequest<ErrorOr<ProfileRespons
      string Email,
      string? PhoneNumber,
      string? NationalId,
-     DateTime DateOfBirth,
+     DateOnly DateOfBirth,
      string? Address,
      StudentProfileInfo? StudentInfo,
      EmployeeProfileInfo? EmployeeInfo

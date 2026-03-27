@@ -13,7 +13,7 @@ namespace Methaq.Domain.ApplicationUsers
         public string LastName { get; set; } = null!;
         public string FullName => $"{FirstName} {SecondName} {ThirdName} {LastName}";
         public string? NationalId { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateOnly DateOfBirth { get; set; }
         public string? Address { get; set; }
 
         public AccountStatus AccountStatus { get; set; } = AccountStatus.Pending;
