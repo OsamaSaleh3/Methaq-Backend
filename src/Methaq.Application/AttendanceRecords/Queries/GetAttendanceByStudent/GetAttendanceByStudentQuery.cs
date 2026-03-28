@@ -10,7 +10,7 @@ public record GetAttendanceByStudentQuery(Guid StudentId)
 public record AttendanceByStudentResponse(
     Guid Id,
     Guid LectureId,
-    DateTime LectureDate,
+    DateOnly LectureDate,
     AttendanceStatus Status,
     string? ExcuseReason,
     string? Notes,

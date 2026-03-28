@@ -9,7 +9,7 @@ public record GetLecturesBySectionQuery(
 
 public record LectureSummaryResponse(
     Guid Id,
-    DateTime Date,
+    DateOnly Date,
     TimeOnly StartTime,
     TimeOnly EndTime,
     int Status,

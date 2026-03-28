@@ -5,7 +5,7 @@ namespace Methaq.Application.Lectures.Commands.CreateLecture;
 
 public record CreateLectureCommand(
     Guid SectionId,
-    DateTime Date,
+    DateOnly Date,
     TimeOnly StartTime,
     TimeOnly EndTime
 ) : IRequest<ErrorOr<Guid>>;

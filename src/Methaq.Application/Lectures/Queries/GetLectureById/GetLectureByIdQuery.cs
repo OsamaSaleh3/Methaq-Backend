@@ -11,7 +11,7 @@ public record LectureDetailsResponse(
     Guid Id,
     Guid SectionId,
     string SectionName,
-    DateTime Date,
+    DateOnly Date,
     TimeOnly StartTime,
     TimeOnly EndTime,
     int Status,

@@ -1,4 +1,5 @@
 using FluentValidation;
+using Methaq.Domain.Lectures;
 
 namespace Methaq.Application.Lectures.Commands.CreateLecture;
 
@@ -11,8 +12,10 @@ public class CreateLectureCommandValidator : AbstractValidator<CreateLectureComm
 
         RuleFor(x => x.Date)
             .NotEmpty().WithMessage("Date is required.")
-            .Must(date => date.Date >= DateTime.UtcNow.Date)
+            .Must(date => date >= DateOnly.FromDateTime(DateTime.UtcNow))
             .WithMessage("Date cannot be in the past.");
+
+        
 
         RuleFor(x => x.EndTime)
             .Must((command, endTime) => endTime > command.StartTime)

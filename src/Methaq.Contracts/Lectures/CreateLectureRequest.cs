@@ -2,7 +2,7 @@
 
 public record CreateLectureRequest(
     Guid SectionId,
-    DateTime Date,
+    DateOnly Date,
     string StartTime,
     string EndTime
 );

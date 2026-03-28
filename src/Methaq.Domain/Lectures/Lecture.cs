@@ -12,7 +12,7 @@ public class Lecture : BaseEntity
     public Guid SectionId { get; private set; }
     public Section Section { get; private set; } = null!;
 
-    public DateTime Date { get; private set; }
+    public DateOnly Date { get; private set; }
     public TimeOnly StartTime { get; private set; }
     public TimeOnly EndTime { get; private set; }
 
@@ -27,7 +27,7 @@ public class Lecture : BaseEntity
 
     protected Lecture() { }
 
-    private Lecture(Guid sectionId, DateTime date, TimeOnly startTime, TimeOnly endTime)
+    private Lecture(Guid sectionId, DateOnly date, TimeOnly startTime, TimeOnly endTime)
     {
         SectionId = sectionId;
         Date = date;
@@ -36,12 +36,12 @@ public class Lecture : BaseEntity
         Status = LectureStatus.Scheduled;
     }
 
-    public static ErrorOr<Lecture> Create(Guid sectionId, DateTime date, TimeOnly startTime, TimeOnly endTime)
+    public static ErrorOr<Lecture> Create(Guid sectionId, DateOnly date, TimeOnly startTime, TimeOnly endTime)
     {
         if (sectionId == Guid.Empty)
             return LectureErrors.SectionIdRequired;
 
-        if (date.Date < DateTime.UtcNow.Date)
+        if (date < DateOnly.FromDateTime(DateTime.UtcNow))
             return LectureErrors.DateCannotBeInPast;
 
         if (endTime <= startTime)

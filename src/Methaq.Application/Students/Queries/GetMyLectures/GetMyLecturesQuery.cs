@@ -8,7 +8,7 @@ public record GetMyLecturesQuery(string UserId) : IRequest<ErrorOr<List<StudentL
 
 public record StudentLectureResponse(
     Guid Id,
-    DateTime Date,
+    DateOnly Date,
     TimeOnly StartTime,
     TimeOnly EndTime,
     LectureStatus Status,
