@@ -20,7 +20,7 @@ public class CreateCenterCommandHandler : IRequestHandler<CreateCenterCommand, E
 
     public async Task<ErrorOr<Guid>> Handle(CreateCenterCommand request, CancellationToken cancellationToken)
     {
-        var manager = await _employeeRepository.GetByIdAsync(request.ManagerId);
+        var manager = await _employeeRepository.GetByIdWithDetailsAsync(request.ManagerId);
         if (manager is null)
             return CreateCenterErrors.ManagerNotFound;
 
@@ -29,6 +29,9 @@ public class CreateCenterCommandHandler : IRequestHandler<CreateCenterCommand, E
 
         if(!manager.IsManager())
             return CreateCenterErrors.ManagerNotEligible;
+
+        if(manager.CenterId is not null)
+            return CreateCenterErrors.ManagerAlreadyAssignedToCenter;
 
         var centerResult = QuranCenter.Create(
                 request.Name,

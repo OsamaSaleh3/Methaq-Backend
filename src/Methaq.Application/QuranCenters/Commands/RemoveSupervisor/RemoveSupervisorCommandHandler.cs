@@ -1,6 +1,7 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Interfaces;
+using Methaq.Application.Employees.Commands.Resign;
 
 namespace Methaq.Application.QuranCenters.Commands.RemoveSupervisor;
 
@@ -19,13 +20,22 @@ public class RemoveSupervisorCommandHandler : IRequestHandler<RemoveSupervisorCo
 
     public async Task<ErrorOr<Success>> Handle(RemoveSupervisorCommand request, CancellationToken cancellationToken)
     {
-        var center =await _centerRepository.GetByIdAsync(request.CenterId);
+        var center =await _centerRepository.GetByIdWithDetailsAsync(request.CenterId);
         if (center is null) 
             return RemoveSupervisorErrors.CenterNotFound;
 
-        var employee = await _employeeRepository.GetByIdAsync(request.SupervisorId);
+        var employee = await _employeeRepository.GetByIdWithDetailsAsync(request.SupervisorId);
         if(employee is null) 
             return RemoveSupervisorErrors.SupervisorNotFound;
+
+        if (employee.SupervisedSections.Count > 0)
+            return RemoveSupervisorErrors.SupervisorHasSupervisedSections;
+
+        if (employee.IsManager())
+        {
+            if (employee.CenterId is not null)
+                return RemoveSupervisorErrors.SupervisorIsCenterManager;
+        }
 
         var result = center.RemoveSupervisor(request.SupervisorId);
         if (result.IsError)

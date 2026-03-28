@@ -15,4 +15,8 @@ public static class CreateCenterErrors
     public static readonly Error ManagerNotEligible = Error.Conflict(
         code: "QuranCenter.ManagerNotEligible",
         description: "Employee is not a center manager.");
+
+    public static readonly Error ManagerAlreadyAssignedToCenter = Error.Conflict(
+        code: "QuranCenter.ManagerAlreadyAssigned",
+        description: "Employee is already assigned to another center.");
 }

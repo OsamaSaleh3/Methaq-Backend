@@ -24,7 +24,7 @@ public class CloseSectionCommandHandler : IRequestHandler<CloseSectionCommand, E
 
     public async Task<ErrorOr<Success>> Handle(CloseSectionCommand command, CancellationToken cancellationToken)
     {
-        var section = await _sectionRepository.GetByIdAsync(command.SectionId);
+        var section = await _sectionRepository.GetByIdWithDetailsAsync(command.SectionId);
         if (section is null)
             return CloseSectionErrors.SectionNotFound;
 

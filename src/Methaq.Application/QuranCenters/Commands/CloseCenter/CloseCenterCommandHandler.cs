@@ -1,6 +1,8 @@
 using ErrorOr;
 using MediatR;
 using Methaq.Application.Common.Interfaces;
+using Methaq.Domain.CenterEnrollmentRequests.enums;
+using Methaq.Domain.Sections.enums;
 
 namespace Methaq.Application.QuranCenters.Commands.CloseCenter;
 
@@ -19,9 +21,24 @@ public class CloseCenterCommandHandler : IRequestHandler<CloseCenterCommand, Err
 
     public async Task<ErrorOr<Success>> Handle(CloseCenterCommand command, CancellationToken cancellationToken)
     {
-        var center = await _centerRepository.GetByIdAsync(command.CenterId);
+        var center = await _centerRepository.GetByIdWithDetailsAsync(command.CenterId);
         if (center is null)
             return CloseCenterErrors.CenterNotFound;
+
+        foreach(var section in center.Sections)
+        {
+            if (section.Status == SectionStatus.Active)
+            {
+                section.Close();
+            }
+        }
+        foreach (var request in center.EnrollmentRequests)
+        {
+            if (request.Status == EnrollmentRequestStatus.Pending)
+            {
+                request.Reject();
+            }
+        }
 
         var result = center.Close();
         if (result.IsError)

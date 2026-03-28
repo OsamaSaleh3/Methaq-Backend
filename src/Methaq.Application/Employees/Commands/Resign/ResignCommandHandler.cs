@@ -24,12 +24,21 @@ namespace Methaq.Application.Employees.Commands.Resign
 
         public async Task<ErrorOr<Success>> Handle(ResignCommand request, CancellationToken cancellationToken)
         {
-            var supervisor = await _employeeRepository.GetByIdAsync(request.EmployeeId);
+            var supervisor = await _employeeRepository.GetByIdWithDetailsAsync(request.EmployeeId);
             if (supervisor is null)
-                return ReactivateErrors.SupervisorNotFound;
+                return ResignErrors.SupervisorNotFound;
 
             if (!supervisor.CanBeSupervisor())
-                return ReactivateErrors.SupervisorNotActive;
+                return ResignErrors.SupervisorNotActive;
+
+            if (supervisor.SupervisedSections.Count > 0)
+                return ResignErrors.SupervisorHasSupervisedSections;
+
+            if (supervisor.IsManager())
+            {
+                if(supervisor.CenterId is not null)
+                    return ResignErrors.SupervisorIsCenterManager;
+            }
 
             var resignResult=supervisor.Resign();
             if (resignResult.IsError)

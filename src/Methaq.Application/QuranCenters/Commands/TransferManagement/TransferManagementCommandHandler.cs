@@ -31,6 +31,11 @@ public class TransferManagementCommandHandler : IRequestHandler<TransferManageme
         if (oldManager is null)
             return TransferManagementErrors.OldManagerNotFound;
 
+        if (!newManager.CanBeSupervisor())
+        {
+            return TransferManagementErrors.NewManagerNotActive;
+        }
+
         await _unitOfWork.BeginTransactionAsync();
 
         try
@@ -42,6 +47,7 @@ public class TransferManagementCommandHandler : IRequestHandler<TransferManageme
             var promoteResult = newManager.PromoteToManager(request.CenterId);
             if (promoteResult.IsError)
                 return promoteResult.Errors;
+
 
             var transferResult=center.TransferManagement(request.NewManagerId);
             if(transferResult.IsError)

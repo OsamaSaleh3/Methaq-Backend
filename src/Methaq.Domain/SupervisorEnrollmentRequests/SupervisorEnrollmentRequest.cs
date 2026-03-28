@@ -13,7 +13,6 @@ public class SupervisorEnrollmentRequest : BaseEntity
 
     public Guid CenterId { get; private set; }
     public QuranCenter Center { get; private set; } = null!;
-
     public SupervisorRequestStatus Status { get; private set; }
     public string? RejectionReason { get; private set; }
     public DateTime? ReviewedAt { get; private set; }

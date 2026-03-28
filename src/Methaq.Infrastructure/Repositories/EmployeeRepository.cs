@@ -65,5 +65,15 @@ namespace Methaq.Infrastructure.Repositories
                 .Include(e => e.User)
                 .FirstOrDefaultAsync(e => e.UserId == userId);
         }
+
+        public async Task<Employee?> GetByIdWithDetailsAsync(Guid id)
+        {
+            return await _context.Employees
+           .Include(s => s.User)
+           .Include(s => s.SupervisedSections)
+           .Include(c=>c.Center)
+            .ThenInclude(c=>c!.EnrollmentRequests)
+           .FirstOrDefaultAsync(s => s.Id == id);
+        }
     }
 }

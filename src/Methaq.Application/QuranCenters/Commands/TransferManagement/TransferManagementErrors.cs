@@ -19,4 +19,9 @@ public static class TransferManagementErrors
     public static readonly Error TransferFailed = Error.Failure(
         code: "QuranCenter.TransferFailed",
         description: "Failed to transfer management. Please try again.");
+
+    public static readonly Error NewManagerNotActive= Error.Validation(
+        code: "QuranCenter.NewManagerNotActive",
+        description: "The new manager must be an active employee.");
+
 }

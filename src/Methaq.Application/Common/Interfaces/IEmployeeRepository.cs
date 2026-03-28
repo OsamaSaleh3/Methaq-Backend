@@ -10,6 +10,7 @@ namespace Methaq.Application.Common.Interfaces
     public interface IEmployeeRepository
     {
         Task<Employee?> GetByIdAsync(Guid id);
+        Task<Employee?>GetByIdWithDetailsAsync(Guid id);
         Task<List<Employee>> GetAvailableSupervisorsAsync();
         Task<Employee?> GetByIdWithUserAsync(Guid id);
         Task<List<Employee>> GetAllWithUserAsync();
