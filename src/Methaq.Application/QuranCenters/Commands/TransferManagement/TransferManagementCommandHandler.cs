@@ -36,33 +36,21 @@ public class TransferManagementCommandHandler : IRequestHandler<TransferManageme
             return TransferManagementErrors.NewManagerNotActive;
         }
 
-        await _unitOfWork.BeginTransactionAsync();
+        
+        var demoteResult = oldManager.DemoteToSupervisor();
+        if (demoteResult.IsError)
+            return demoteResult.Errors;
 
-        try
-        {
-            var demoteResult = oldManager.DemoteToSupervisor();
-            if (demoteResult.IsError)
-                return demoteResult.Errors;
-
-            var promoteResult = newManager.PromoteToManager(request.CenterId);
-            if (promoteResult.IsError)
-                return promoteResult.Errors;
+        var promoteResult = newManager.PromoteToManager(request.CenterId);
+        if (promoteResult.IsError)
+            return promoteResult.Errors;
 
 
-            var transferResult=center.TransferManagement(request.NewManagerId);
-            if(transferResult.IsError)
-                return transferResult.Errors;
+        var transferResult=center.TransferManagement(request.NewManagerId);
+        if(transferResult.IsError)
+            return transferResult.Errors;
 
-            await _unitOfWork.SaveChangesAsync();
-            await _unitOfWork.CommitTransactionAsync();
-        }
-        catch
-        {
-            await _unitOfWork.RollbackTransactionAsync();
-            return TransferManagementErrors.TransferFailed;
-
-        }
-
+        await _unitOfWork.SaveChangesAsync();
         return Result.Success;
 
     }
