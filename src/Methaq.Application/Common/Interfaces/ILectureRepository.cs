@@ -9,4 +9,6 @@ public interface ILectureRepository
     Task<List<Lecture>> GetBySectionIdAsync(Guid sectionId);
     Task AddAsync(Lecture lecture, CancellationToken cancellationToken);
     Task<Lecture?> GetByIdWithSectionAsync(Guid id);
+    Task<List<Lecture>> GetBySectionIdAndDateAsync(Guid sectionId, DateOnly date);
+
 }

@@ -81,5 +81,10 @@ public class SectionTaskConfiguration : IEntityTypeConfiguration<SectionTask>
             .WithOne(e => e.SectionTask)
             .HasForeignKey(e => e.SectionTaskId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(t => t.Lecture)
+              .WithMany(l => l.SectionTasks)
+              .HasForeignKey(t => t.LectureId)
+              .OnDelete(DeleteBehavior.Restrict);
     }
 }

@@ -1,11 +1,12 @@
-﻿using Methaq.Application.Lectures.Commands.CancelLecture;
+﻿using MediatR;
+using Methaq.Application.Lectures.Commands.CancelLecture;
 using Methaq.Application.Lectures.Commands.CompleteLecture;
 using Methaq.Application.Lectures.Commands.CreateLecture;
 using Methaq.Application.Lectures.Commands.StartLecture;
 using Methaq.Application.Lectures.Queries.GetLectureById;
+using Methaq.Application.Lectures.Queries.GetLecturesByDate;
 using Methaq.Application.Lectures.Queries.GetLecturesBySection;
 using Methaq.Contracts.Lectures;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -74,6 +75,14 @@ public class LecturesController : BaseController
     public async Task<IActionResult> GetLecturesBySection(Guid sectionId)
     {
         var query = new GetLecturesBySectionQuery(sectionId);
+        var result = await _mediator.Send(query);
+        return HandleResult(result);
+    }
+
+    [HttpGet("{sectionId:guid}/lectures/by-date")]
+    public async Task<IActionResult> GetLecturesByDate(Guid sectionId, [FromQuery] DateOnly date)
+    {
+        var query = new GetLecturesByDateQuery(sectionId, date);
         var result = await _mediator.Send(query);
         return HandleResult(result);
     }

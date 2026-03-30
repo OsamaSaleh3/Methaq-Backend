@@ -52,5 +52,14 @@ namespace Methaq.Infrastructure.Repositories
                 .Where(l => l.SectionId == sectionId)
                 .ToListAsync();
         }
+
+        public async Task<List<Lecture>> GetBySectionIdAndDateAsync(Guid sectionId, DateOnly date)
+        {
+            return await _context.Lectures
+                .Include(l => l.AttendanceRecords)
+                .Include(l => l.SectionTasks)
+                .Where(l => l.SectionId == sectionId && l.Date == date)
+                .ToListAsync();
+        }
     }
 }

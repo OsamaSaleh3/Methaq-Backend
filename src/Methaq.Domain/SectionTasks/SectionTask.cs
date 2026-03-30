@@ -1,6 +1,7 @@
 ﻿using ErrorOr;
 using Methaq.Domain.Common;
 using Methaq.Domain.Employees;
+using Methaq.Domain.Lectures;
 using Methaq.Domain.Sections;
 using Methaq.Domain.SectionTasks.enums;
 using Methaq.Domain.SectionTasks.ValueObject;
@@ -19,6 +20,7 @@ public class SectionTask : BaseEntity
     public enums.TaskStatus Status { get; private set; } = enums.TaskStatus.Pending;
     public TaskTypes Types { get; private set; } 
     public Guid LectureId { get; private set; }
+    public Lecture Lecture { get; private set; } = null!;
     public Guid AssignedById { get; private set; }
     public Employee AssignedBy { get; private set; } = null!;
     public decimal FullMark { get; private set; }

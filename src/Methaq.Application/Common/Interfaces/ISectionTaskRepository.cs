@@ -8,4 +8,6 @@ public interface ISectionTaskRepository
     Task<List<SectionTask>> GetByLectureIdAsync(Guid lectureId);
     Task<List<StudentTaskEvaluation>> GetEvaluationsByStudentIdAsync(Guid studentId);
     Task AddAsync(SectionTask task);
+    Task<List<SectionTask>> GetBySectionIdAndDateAsync(Guid sectionId, DateOnly date);
+
 }

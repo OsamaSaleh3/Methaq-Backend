@@ -43,5 +43,15 @@ public SectionTaskRepository(ApplicationDbContext context)
                 .Where(e => e.StudentId == studentId)
                 .ToListAsync();
         }
+
+        public async Task<List<SectionTask>> GetBySectionIdAndDateAsync(Guid sectionId, DateOnly date)
+        {
+            return await _context.SectionTasks
+        .Include(t => t.AssignedBy).ThenInclude(e => e.User)
+        .Include(t => t.Student).ThenInclude(s => s!.User)
+        .Where(t => t.SectionId == sectionId && t.Lecture.Date == date)
+        .ToListAsync();
+        }
+
     }
 }
