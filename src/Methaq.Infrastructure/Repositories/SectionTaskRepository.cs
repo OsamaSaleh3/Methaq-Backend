@@ -56,13 +56,20 @@ public SectionTaskRepository(ApplicationDbContext context)
 
         public async Task<List<TaskHeatmapResponse>> GetTasksHeatmapAsync(Guid sectionId)
         {
-             return await _context.SectionTasks
-                .Include(t => t.Lecture)
-                .Where(t => t.SectionId == sectionId)
-                .GroupBy(t => t.Lecture.Date)
-                .Select(g => new TaskHeatmapResponse(g.Key, g.Count()))
-                .OrderBy(x => x.Date)
-                .ToListAsync();
+            var data = await _context.SectionTasks
+               .Where(t => t.SectionId == sectionId)
+               .GroupBy(t => t.Lecture.Date)
+               .Select(g => new
+               {
+                   Date = g.Key,
+                   Count = g.Count()
+               })
+               .OrderBy(x => x.Date)
+               .ToListAsync();
+
+            return data
+                .Select(x => new TaskHeatmapResponse(x.Date, x.Count))
+                .ToList();
         }
     }
 }
