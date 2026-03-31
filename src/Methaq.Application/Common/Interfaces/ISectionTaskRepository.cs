@@ -1,4 +1,5 @@
-﻿using Methaq.Domain.SectionTasks;
+﻿using Methaq.Application.SectionTasks.Queries.GetTasksHeatmap;
+using Methaq.Domain.SectionTasks;
 
 namespace Methaq.Application.Common.Interfaces;
 
@@ -9,5 +10,6 @@ public interface ISectionTaskRepository
     Task<List<StudentTaskEvaluation>> GetEvaluationsByStudentIdAsync(Guid studentId);
     Task AddAsync(SectionTask task);
     Task<List<SectionTask>> GetBySectionIdAndDateAsync(Guid sectionId, DateOnly date);
+    Task<List<TaskHeatmapResponse>> GetTasksHeatmapAsync(Guid sectionId);
 
 }

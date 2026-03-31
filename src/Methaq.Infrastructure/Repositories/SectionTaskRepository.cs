@@ -1,4 +1,5 @@
 ﻿using Methaq.Application.Common.Interfaces;
+using Methaq.Application.SectionTasks.Queries.GetTasksHeatmap;
 using Methaq.Domain.SectionTasks;
 using Methaq.Infrastructure.Common.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -53,5 +54,15 @@ public SectionTaskRepository(ApplicationDbContext context)
         .ToListAsync();
         }
 
+        public async Task<List<TaskHeatmapResponse>> GetTasksHeatmapAsync(Guid sectionId)
+        {
+             return await _context.SectionTasks
+                .Include(t => t.Lecture)
+                .Where(t => t.SectionId == sectionId)
+                .GroupBy(t => t.Lecture.Date)
+                .Select(g => new TaskHeatmapResponse(g.Key, g.Count()))
+                .OrderBy(x => x.Date)
+                .ToListAsync();
+        }
     }
 }

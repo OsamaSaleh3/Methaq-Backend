@@ -4,6 +4,7 @@ using Methaq.Application.SectionTasks.Commands.EvaluateStudent;
 using Methaq.Application.SectionTasks.Queries.GetStudentEvaluations;
 using Methaq.Application.SectionTasks.Queries.GetTasksByDate;
 using Methaq.Application.SectionTasks.Queries.GetTasksByLecture;
+using Methaq.Application.SectionTasks.Queries.GetTasksHeatmap;
 using Methaq.Contracts.SectionTasks;
 using Methaq.Domain.SectionTasks.enums;
 using Methaq.Domain.SectionTasks.ValueObject;
@@ -84,6 +85,14 @@ public class SectionTasksController : BaseController
     public async Task<IActionResult> GetTasksByDate(Guid sectionId, [FromQuery] DateOnly date)
     {
         var query = new GetTasksByDateQuery(sectionId, date);
+        var result = await _mediator.Send(query);
+        return HandleResult(result);
+    }
+
+    [HttpGet("{sectionId:guid}/tasks/heatmap")]
+    public async Task<IActionResult> GetTasksHeatmap(Guid sectionId)
+    {
+        var query = new GetTasksHeatmapQuery(sectionId);
         var result = await _mediator.Send(query);
         return HandleResult(result);
     }
